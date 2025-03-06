@@ -45,9 +45,9 @@ Música y sonido: Banda sonora de ambientación espacial con efectos de sonido p
 # Nuestro proyecto está actualmente en fase de planificación, con desarrollo inicial del motor de juego y mecánicas principales.
 
 # Division del proyecto por miembros:
-Johan Moran: Creación personajes 
- Lorenzo Pérez Alvarado: Mapas y menú
-Jonatha Gorta Padron: Diseño de niveles e implementación de los personajes
-Anisleidy Guerra: Creacion e implementación del audio 
-Alejandro Lopez Almeida: Encargado de la lógica del juego, mecánicas y comportamiento de los personajes
+Johan Moran: Creación personajes.
+Lorenzo Pérez Alvarado: Mapas y menú.
+Jonatha Horta Padron: Diseño de niveles e implementación de los personajes.
+Anisleidy Guerra: Creacion e implementación del audio.
+Alejandro Lopez Almeida: Encargado de la lógica del juego, mecánicas y comportamiento de los personajes.
 # *Esto puede tener cambios a medida que avanza el proyecto. También habrá apoyo de todos los miembros en alguna tarea específica con el objetivo de agilizar los problemas.
