@@ -49,7 +49,7 @@ Johan Moran: Creación personajes.
 
 Lorenzo Pérez Alvarado: Mapas y menú.
 
-Jonatha Horta Padron: Diseño de niveles e implementación de los personajes.
+Jonathan Horta Padron: Diseño de niveles e implementación de los personajes.
 
 Anisleidy Guerra: Creacion e implementación del audio.
 
