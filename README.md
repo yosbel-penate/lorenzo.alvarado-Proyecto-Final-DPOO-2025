@@ -1,10 +1,15 @@
 # Documento de Visión Inicial del Proyecto Final de la asignatura Diseño y Programación Orientada a Objetos.
 ## Equipo numero 2 conformado por los siguientes integrantes.
 Lorenzo Pérez Alvarado©
+
 Anisleidy Guerra Diaz
+
 Johan Moran Sarmiento
+
 Jonathan Horta Padrón
+
 Alejandro López Almeida
+
 
 ## Título del juego que desarrollaremos: “Galactic Odyssey: The Cosmic Enigma”
 ## Temática/género del juego:
@@ -36,10 +41,15 @@ Funciones del menú
 Nuestro proyecto está actualmente en fase de planificación, con desarrollo inicial del motor de juego y mecánicas principales.
 ## Division del proyecto por miembros:
 Johan Moran: Creación personajes 
+
 Lorenzo Pérez Alvarado: Mapas y menú
+
 Jonatha Gorta Padron: Diseño de niveles e implementación de los personajes
+
 Anisleidy Guerra: Creacion e implementación del audio 
+
 Alejandro Lopez Almeida: Encargado de la lógica del juego, mecánicas y comportamiento de los personajes
+
 ## Requisitos del Sistema
 Lenguaje: Java 11 o superior.
 Sistema operativo: Windows, Linux o macOS.
