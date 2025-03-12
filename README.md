@@ -1,4 +1,4 @@
-# Documento de Visión Inicial del Proyecto Final de la asignatura Diseño y Programación Orientada a Objetos.
+# Documento de Visión Inicial y de Requerimientos del Proyecto Final de la asignatura Diseño y Programación Orientada a Objetos.
 ## Equipo numero 2 conformado por los siguientes integrantes.
 Lorenzo Pérez Alvarado©
 
