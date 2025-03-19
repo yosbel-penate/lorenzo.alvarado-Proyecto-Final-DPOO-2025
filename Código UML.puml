@@ -35,7 +35,7 @@ class ArañaCósmica extends Enemigo {
     + lanzarRed(): void
 }
 
-class Habilidad {
+class Habilidad   {
     - nombre: String
     - tipo: String
     - costoEnergia: int
