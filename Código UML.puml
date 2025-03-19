@@ -1,0 +1,87 @@
+@startuml
+
+abstract class Personaje {
+    - nombre: String
+    - vida: int
+    - energia: int5
+    - rangoMovimiento: int
+    - rangoAtaque: int
+    - habilidades: List<Habilidad>
+    + mover(casillaDestino: Casilla): void
+    + atacar(objetivo: Enemigo): void
+    + usarHabilidad(habilidad: Habilidad): void
+}
+
+class Jugador extends Personaje {
+    - experiencia: int
+    + resolverAcertijo(acertijo: Acertijo): boolean
+}
+
+abstract class Enemigo {
+    - nombre: String
+    - vida: int
+    - danio: int
+    - comportamientoIA: String
+    + actuar(): void
+}
+
+class DroneCombate extends Enemigo {
+    - tipo: String = "Drone"
+    + escanear(): void
+}
+
+class ArañaCósmica extends Enemigo {
+    - tipo: String = "Araña"
+    + lanzarRed(): void
+}
+
+class Habilidad {
+    - nombre: String
+    - tipo: String
+    - costoEnergia: int
+    - rango: int
+    - efecto: String
+    + activar(origen: Personaje, objetivo: Casilla): void
+}
+
+class Tablero {
+    - casillas: List<Casilla>
+    - ancho: int
+    - alto: int
+    + generarNivel(nivel: int): void
+    + obtenerCasilla(x: int, y: int): Casilla
+}
+
+class Casilla {
+    - x: int
+    - y: int
+    - tipo: String
+    - contenido: Objeto
+    - peligro: String
+    + estaOcupada(): boolean
+}
+
+class Objeto {
+    - nombre: String
+    - tipo: String
+    - efecto: String
+    + usar(jugador: Jugador): void
+}
+
+class Acertijo {
+    - descripcion: String
+    - solucion: String
+    + resolver(intento: String): boolean
+}
+
+class Juego {
+    - jugadores: List<Jugador>
+    - enemigos: List<Enemigo>
+    - tablero: Tablero
+    - turnoActual: int
+    + iniciarPartida(): void
+    + finalizarTurno(): void
+    + verificarVictoria(): boolean
+}
+
+@enduml
