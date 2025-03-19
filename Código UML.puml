@@ -52,7 +52,7 @@ class Tablero {
     + obtenerCasilla(x: int, y: int): Casilla
 }
 
-class Casilla {
+class Casillas  {
     - x: int
     - y: int
     - tipo: String
