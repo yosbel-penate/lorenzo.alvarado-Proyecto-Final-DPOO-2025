@@ -84,4 +84,6 @@ class Juego {
     + verificarVictoria(): boolean
 }
 
+
+
 @enduml
