@@ -17,7 +17,7 @@ class Jugador extends Personaje {
     + resolverAcertijo(acertijo: Acertijo): boolean
 }
 
-abstract class Enemigo   {
+abstract class Enemigo  {
     - nombre: String
     - vida: int
     - danio: int
