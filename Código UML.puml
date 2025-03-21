@@ -3,21 +3,139 @@
 abstract class Personaje {
     - nombre: String
     - vida: int
-    - energia: int5
+    - danno: int
     - rangoMovimiento: int
     - rangoAtaque: int
-    - habilidades: List<Habilidad>
-    + mover(casillaDestino: Casilla): void
+    - habilidades: String
+    + mover(casillaDestino: Casillas): void
     + atacar(objetivo: Enemigo): void
-    + usarHabilidad(habilidad: Habilidad): void
+    + usarHabilidad(): void
 }
 
-class Jugador extends Personaje {
-    - experiencia: int
-    + resolverAcertijo(acertijo: Acertijo): boolean
+
+
+ class CapitanOrion {
+-tipo:String=”CapitanOrion”
+-rangoMovimiento: 5
+-rangoAtaque: 3
+-danno: 2,4
+
++InspiracionGalactica():void
+
+}
+class Nova {
+-tipo:String=”Nova”
+-rangoMovimiento: 6
+-rangoAtaque: 2
+-danno: 1,3
++DesactivarTrampas():void
+}
+class Zorak {
+-tipo:String=” Zorak”
+-rangoMovimiento: 4
+-rangoAtaque: 1
+-danno: 4,6
++GolpeDeEnergia():void
+}
+class Lyra {
+-tipo:String=”Lyra”
+-rangoMovimiento: 5
+-rangoAtaque: 4
+-danno: 0
++CuracionCosmica():void
+}
+class Quasar {
+-tipo:String=”Quasar”
+-rangoMovimiento: 5
+-rangoAtaque: 3
+-danno: 1,2
++ReparacionRapida():void
+}
+class Eclipse {
+-tipo:String=”Eclipse”
+-rangoMovimiento: 7
+-rangoAtaque: 2
+-danno: 3,5
++AtaqueFurtivo():void
+}
+class Titan {
+-tipo:String=”Titan”
+-rangoMovimiento: 3
+-rangoAtaque: 1
+-danno: 2,3
++EscudoEnergia():void
+}
+class Stella {
+-tipo:String=”Stella”
+-rangoMovimiento: 5
+-rangoAtaque: 6
+-danno: 2,4
++ControlMental():void
+}
+class Vortex {
+-tipo:String=”Vortex”
+-rangoMovimiento: 5
+-rangoAtaque: 5
+-danno: 3,6
++TormentaCosmica():void
+}
+class Aurora {
+-tipo:String=”Aurora”
+-rangoMovimiento: 6
+-rangoAtaque: 0
+-danno: 0
++Negociacion():void
+}
+    class Blaze {
+-tipo:String=”Blaze”
+-rangoMovimiento: 4
+-rangoAtaque: 2
+-danno: 2,4
++DisparoExplosivo():void
+}
+class Luna {
+-tipo:String=”Luna”
+-rangoMovimiento: 4
+-rangoAtaque: 2
+-danno: 2,4
++InstintoDeCazadora():void
+}
+class Cygnus {
+-tipo:String=”Cygnus”
++ManiobraEvasiva():void
+}
+class OrionJr {
+-tipo:String=”OrionJr”
++PotencialDesbloqueado():void
+}
+class Nebula {
+-tipo:String=”Nebula”
++SabiduriaAncestral():void
+}
+class Phobos {
+-tipo:String=”Phobos”
++DisparoLetal():void
+}
+class Deimos {
+-tipo:String=”Deimos”
++Infiltracion():void
+}
+class Solara {
+-tipo:String=”Solara”
++MurallaDeLuz():void
+}
+class Comet {
+-tipo:String=”Comet”
++GolpeRelampago():void
+}
+class Andromeda {
+-tipo:String=”Andromeda”
++RitualEstelar():void
 }
 
-abstract class Enemigo {
+
+
+abstract class Enemigo  {
     - nombre: String
     - vida: int
     - danio: int
@@ -25,34 +143,35 @@ abstract class Enemigo {
     + actuar(): void
 }
 
-class DroneCombate extends Enemigo {
+class DroneCombate {
     - tipo: String = "Drone"
     + escanear(): void
 }
 
-class ArañaCósmica extends Enemigo {
+class ArañaCósmica  {
     - tipo: String = "Araña"
     + lanzarRed(): void
 }
-
-class Habilidad {
-    - nombre: String
-    - tipo: String
-    - costoEnergia: int
-    - rango: int
-    - efecto: String
-    + activar(origen: Personaje, objetivo: Casilla): void
+class PiratasEspaciales {
+-tipo:String=”Piratas”
++robo():void
+}
+class GiganteDeLava {
+-tipo:String=”Gigante”
++erupción():void
 }
 
+
+
 class Tablero {
-    - casillas: List<Casilla>
+    - casillas: List<Casillas>
     - ancho: int
     - alto: int
     + generarNivel(nivel: int): void
-    + obtenerCasilla(x: int, y: int): Casilla
+    + obtenerCasillas(x: int, y: int): Casillas
 }
 
-class Casilla {
+class Casillas  {
     - x: int
     - y: int
     - tipo: String
@@ -63,9 +182,28 @@ class Casilla {
 
 class Objeto {
     - nombre: String
-    - tipo: String
     - efecto: String
-    + usar(jugador: Jugador): void
+    - rangoUso: int
+    + usar(): void
+}
+class PocionCurativa{
+-nombre: "Pocion Curativa"
+-efecto: 3,5
+-rangoUso: 1
++restauraVida()
+}
+class EscudoEnergia{
+-nombre: "Escudo de energia"
+-efecto: 4
+-rangoUso: 1
++Absorbe()
+}
+class BombaPlasma{
+-nombre: Bomba de BombaPlasma
+-efecto: 3
+-danno: int: 4,6
+-rangoUso: 5
++Explota()
 }
 
 class Acertijo {
@@ -75,7 +213,7 @@ class Acertijo {
 }
 
 class Juego {
-    - jugadores: List<Jugador>
+
     - enemigos: List<Enemigo>
     - tablero: Tablero
     - turnoActual: int
@@ -84,4 +222,45 @@ class Juego {
     + verificarVictoria(): boolean
 }
 
+
+Enemigo "1" *-- "1*" DroneCombate
+Enemigo "1" *-- "1*" ArañaCósmica
+Enemigo "1" *-- "1*" PiratasEspaciales
+Enemigo "1" *-- "1*" GiganteDeLava
+Tablero "1" *-- "1*" Casillas
+
+Casillas "1" o-left- "0..1" Objeto: tiene
+
+Juego "1" *-- "1" Tablero: tiene
+
+Juego "1" *-- "1..*" Enemigo: tiene
+Juego "1" *-- "0..*" Acertijo: tiene
+
+Personaje -- Casillas: ocupa >
+Enemigo -- Casillas: ocupa >
+
+CapitanOrion "1" *-up- "1..*" Personaje: tiene
+Zorak "1" *-up- "1..*" Personaje :tiene
+Quasar "1" *-up- "1..*" Personaje: tiene
+Titan"1" *-up- "1..*" Personaje : tiene
+Eclipse"1" *-up- "1..*" Personaje: tiene
+Nova"1" *-up- "1..*" Personaje: tiene
+Lyra"1" *-up- "1..*" Personaje: tiene
+Stella"1" *-up- "1..*" Personaje: tiene
+Vortex"1" *-up- "1..*" Personaje: tiene
+Aurora"1" *-up- "1..*" Personaje: tiene
+Blaze"1" *-up- "1..*" Personaje: tiene
+Luna"1" *-up- "1..*" Personaje: tiene
+Cygnus"1" *-up- "1..*" Personaje: tiene
+OrionJr"1" *-up- "1..*" Personaje: tiene
+Nebula"1" *-up- "1..*" Personaje: tiene
+Phobos"1" *-up- "1..*" Personaje: tiene
+Deimos "1" *-up- "1..*" Personaje: tiene
+Solara"1" *-up- "1..*" Personaje: tiene
+Andromeda "1" *-up- "1..*" Personaje: tiene
+Comet"1" *-up- "1..*" Personaje: tiene
+
+PocionCurativa "1" *-- "1..*" Objeto: tiene
+BombaPlasma "1" *-- "1..*" Objeto: tiene
+EscudoEnergia"1" *-- "1..*" Objeto: tiene
 @enduml
