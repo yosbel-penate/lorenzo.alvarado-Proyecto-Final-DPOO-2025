@@ -14,7 +14,7 @@ abstract class Personaje {
 
 
 
- class CapitanOrion {
+ class CapitanOrion extends Personaje{
 -tipo:String=”CapitanOrion”
 -rangoMovimiento: 5
 -rangoAtaque: 3
@@ -23,112 +23,112 @@ abstract class Personaje {
 +InspiracionGalactica():void
 
 }
-class Nova {
+class Nova extends Personaje{
 -tipo:String=”Nova”
 -rangoMovimiento: 6
 -rangoAtaque: 2
 -danno: 1,3
 +DesactivarTrampas():void
 }
-class Zorak {
+class Zorak extends Personaje {
 -tipo:String=” Zorak”
 -rangoMovimiento: 4
 -rangoAtaque: 1
 -danno: 4,6
 +GolpeDeEnergia():void
 }
-class Lyra {
+class Lyra extends Personaje{
 -tipo:String=”Lyra”
 -rangoMovimiento: 5
 -rangoAtaque: 4
 -danno: 0
 +CuracionCosmica():void
 }
-class Quasar {
+class Quasar extends Personaje{
 -tipo:String=”Quasar”
 -rangoMovimiento: 5
 -rangoAtaque: 3
 -danno: 1,2
 +ReparacionRapida():void
 }
-class Eclipse {
+class Eclipse extends Personaje{
 -tipo:String=”Eclipse”
 -rangoMovimiento: 7
 -rangoAtaque: 2
 -danno: 3,5
 +AtaqueFurtivo():void
 }
-class Titan {
+class Titan extends Personaje{
 -tipo:String=”Titan”
 -rangoMovimiento: 3
 -rangoAtaque: 1
 -danno: 2,3
 +EscudoEnergia():void
 }
-class Stella {
+class Stella extends Personaje{
 -tipo:String=”Stella”
 -rangoMovimiento: 5
 -rangoAtaque: 6
 -danno: 2,4
 +ControlMental():void
 }
-class Vortex {
+class Vortex extends Personaje{
 -tipo:String=”Vortex”
 -rangoMovimiento: 5
 -rangoAtaque: 5
 -danno: 3,6
 +TormentaCosmica():void
 }
-class Aurora {
+class Aurora extends Personaje{
 -tipo:String=”Aurora”
 -rangoMovimiento: 6
 -rangoAtaque: 0
 -danno: 0
 +Negociacion():void
 }
-    class Blaze {
+    class Blaze extends Personaje{
 -tipo:String=”Blaze”
 -rangoMovimiento: 4
 -rangoAtaque: 2
 -danno: 2,4
 +DisparoExplosivo():void
 }
-class Luna {
+class Luna extends Personaje{
 -tipo:String=”Luna”
 -rangoMovimiento: 4
 -rangoAtaque: 2
 -danno: 2,4
 +InstintoDeCazadora():void
 }
-class Cygnus {
+class Cygnus extends Personaje{
 -tipo:String=”Cygnus”
 +ManiobraEvasiva():void
 }
-class OrionJr {
+class OrionJr extends Personaje{
 -tipo:String=”OrionJr”
 +PotencialDesbloqueado():void
 }
-class Nebula {
+class Nebula extends Personaje{
 -tipo:String=”Nebula”
 +SabiduriaAncestral():void
 }
-class Phobos {
+class Phobos extends Personaje{
 -tipo:String=”Phobos”
 +DisparoLetal():void
 }
-class Deimos {
+class Deimos extends Personaje{
 -tipo:String=”Deimos”
 +Infiltracion():void
 }
-class Solara {
+class Solara extends Personaje{
 -tipo:String=”Solara”
 +MurallaDeLuz():void
 }
-class Comet {
+class Comet extends Personaje{
 -tipo:String=”Comet”
 +GolpeRelampago():void
 }
-class Andromeda {
+class Andromeda extends Personaje{
 -tipo:String=”Andromeda”
 +RitualEstelar():void
 }
@@ -143,20 +143,20 @@ abstract class Enemigo  {
     + actuar(): void
 }
 
-class DroneCombate {
+class DroneCombate extends Enemigo{
     - tipo: String = "Drone"
     + escanear(): void
 }
 
-class ArañaCósmica  {
+class ArañaCósmica  extends Enemigo{
     - tipo: String = "Araña"
     + lanzarRed(): void
 }
-class PiratasEspaciales {
+class PiratasEspaciales extends Enemigo {
 -tipo:String=”Piratas”
 +robo():void
 }
-class GiganteDeLava {
+class GiganteDeLava extends Enemigo{
 -tipo:String=”Gigante”
 +erupción():void
 }
@@ -175,30 +175,30 @@ class Casillas  {
     - x: int
     - y: int
     - tipo: String
-    - contenido: Objeto
+    - contenido:
     - peligro: String
-    + estaOcupada(): boolean
+    + estaOcupada(): boolean ObjetoMagico
 }
 
-class Objeto {
+class ObjetoMagico {
     - nombre: String
     - efecto: String
     - rangoUso: int
     + usar(): void
 }
-class PocionCurativa{
+class PocionCurativa extends ObjetoMagico{
 -nombre: "Pocion Curativa"
 -efecto: 3,5
 -rangoUso: 1
 +restauraVida()
 }
-class EscudoEnergia{
+class EscudoEnergia extends ObjetoMagico{
 -nombre: "Escudo de energia"
 -efecto: 4
 -rangoUso: 1
 +Absorbe()
 }
-class BombaPlasma{
+class BombaPlasma extends ObjetoMagico{
 -nombre: Bomba de BombaPlasma
 -efecto: 3
 -danno: int: 4,6
@@ -206,7 +206,7 @@ class BombaPlasma{
 +Explota()
 }
 
-class Acertijo {
+class Acertijo  {
     - descripcion: String
     - solucion: String
     + resolver(intento: String): boolean
@@ -223,44 +223,18 @@ class Juego {
 }
 
 
-Enemigo "1" *-- "1*" DroneCombate
-Enemigo "1" *-- "1*" ArañaCósmica
-Enemigo "1" *-- "1*" PiratasEspaciales
-Enemigo "1" *-- "1*" GiganteDeLava
-Tablero "1" *-- "1*" Casillas
 
-Casillas "1" o-left- "0..1" Objeto: tiene
+
+
 
 Juego "1" *-- "1" Tablero: tiene
 
 Juego "1" *-- "1..*" Enemigo: tiene
-Juego "1" *-- "0..*" Acertijo: tiene
+Juego "1" *-- "1..*" Acertijo: tiene
+Juego "1" *-- "1..*" Personaje: tiene
 
 Personaje -- Casillas: ocupa >
 Enemigo -- Casillas: ocupa >
-
-CapitanOrion "1" *-up- "1..*" Personaje: tiene
-Zorak "1" *-up- "1..*" Personaje :tiene
-Quasar "1" *-up- "1..*" Personaje: tiene
-Titan"1" *-up- "1..*" Personaje : tiene
-Eclipse"1" *-up- "1..*" Personaje: tiene
-Nova"1" *-up- "1..*" Personaje: tiene
-Lyra"1" *-up- "1..*" Personaje: tiene
-Stella"1" *-up- "1..*" Personaje: tiene
-Vortex"1" *-up- "1..*" Personaje: tiene
-Aurora"1" *-up- "1..*" Personaje: tiene
-Blaze"1" *-up- "1..*" Personaje: tiene
-Luna"1" *-up- "1..*" Personaje: tiene
-Cygnus"1" *-up- "1..*" Personaje: tiene
-OrionJr"1" *-up- "1..*" Personaje: tiene
-Nebula"1" *-up- "1..*" Personaje: tiene
-Phobos"1" *-up- "1..*" Personaje: tiene
-Deimos "1" *-up- "1..*" Personaje: tiene
-Solara"1" *-up- "1..*" Personaje: tiene
-Andromeda "1" *-up- "1..*" Personaje: tiene
-Comet"1" *-up- "1..*" Personaje: tiene
-
-PocionCurativa "1" *-- "1..*" Objeto: tiene
-BombaPlasma "1" *-- "1..*" Objeto: tiene
-EscudoEnergia"1" *-- "1..*" Objeto: tiene
+Tablero "1" *-- "1..*" Casillas: tiene
+Juego "1" *-- "1..*" ObjetoMagico: tiene
 @enduml
