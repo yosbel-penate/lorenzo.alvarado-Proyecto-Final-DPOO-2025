@@ -12,8 +12,6 @@ abstract class Personaje {
     + usarHabilidad(): void
 }
 
-
-
  class CapitanOrion extends Personaje{
 -tipo:String=”CapitanOrion”
 -rangoMovimiento: 5
