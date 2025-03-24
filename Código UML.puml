@@ -15,7 +15,6 @@ class Heroes extends Personaje{
 }
  class CapitanOrion extends Heroes{
 +InspiracionGalactica():void
-
 }
 class Nova extends Heroes{
 +DesactivarTrampas():void
