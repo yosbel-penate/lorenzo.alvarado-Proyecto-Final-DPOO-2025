@@ -1,163 +1,111 @@
 @startuml
+class Personaje{
+-nombre: String
+-vida: int
+-Danno: int
+-HabilidadEspecial: String
+}
+class Heroes extends Personaje{
 
-abstract class Personaje {
-    - nombre: String
-    - vida: int
-    - danno: int
     - rangoMovimiento: int
     - rangoAtaque: int
-    - habilidades: String
     + mover(casillaDestino: Casillas): void
     + atacar(objetivo: Enemigo): void
     + usarHabilidad(): void
 }
-
-
-
- class CapitanOrion {
--tipo:String=”CapitanOrion”
--rangoMovimiento: 5
--rangoAtaque: 3
--danno: 2,4
-
+ class CapitanOrion extends Heroes{
 +InspiracionGalactica():void
 
 }
-class Nova {
--tipo:String=”Nova”
--rangoMovimiento: 6
--rangoAtaque: 2
--danno: 1,3
+class Nova extends Heroes{
 +DesactivarTrampas():void
 }
-class Zorak {
--tipo:String=” Zorak”
--rangoMovimiento: 4
--rangoAtaque: 1
--danno: 4,6
+class Zorak extends Heroes {
 +GolpeDeEnergia():void
 }
-class Lyra {
--tipo:String=”Lyra”
--rangoMovimiento: 5
--rangoAtaque: 4
--danno: 0
+class Lyra extends Heroes{
 +CuracionCosmica():void
 }
-class Quasar {
--tipo:String=”Quasar”
--rangoMovimiento: 5
--rangoAtaque: 3
--danno: 1,2
+class Quasar extends Heroes{
 +ReparacionRapida():void
 }
-class Eclipse {
--tipo:String=”Eclipse”
--rangoMovimiento: 7
--rangoAtaque: 2
--danno: 3,5
+class Eclipse extends Heroes{
 +AtaqueFurtivo():void
 }
-class Titan {
--tipo:String=”Titan”
--rangoMovimiento: 3
--rangoAtaque: 1
--danno: 2,3
+class Titan extends Heroes{
 +EscudoEnergia():void
 }
-class Stella {
--tipo:String=”Stella”
--rangoMovimiento: 5
--rangoAtaque: 6
--danno: 2,4
+class Stella extends Heroes{
 +ControlMental():void
 }
-class Vortex {
--tipo:String=”Vortex”
--rangoMovimiento: 5
--rangoAtaque: 5
--danno: 3,6
+class Vortex extends Heroes{
 +TormentaCosmica():void
 }
-class Aurora {
--tipo:String=”Aurora”
--rangoMovimiento: 6
--rangoAtaque: 0
--danno: 0
+class Aurora extends Heroes{
 +Negociacion():void
 }
-    class Blaze {
--tipo:String=”Blaze”
--rangoMovimiento: 4
--rangoAtaque: 2
--danno: 2,4
+    class Blaze extends Heroes{
 +DisparoExplosivo():void
 }
-class Luna {
--tipo:String=”Luna”
--rangoMovimiento: 4
--rangoAtaque: 2
--danno: 2,4
+class Luna extends Heroes{
 +InstintoDeCazadora():void
 }
-class Cygnus {
--tipo:String=”Cygnus”
+class Cygnus extends Heroes{
+
 +ManiobraEvasiva():void
 }
-class OrionJr {
--tipo:String=”OrionJr”
+class OrionJr extends Heroes{
+
 +PotencialDesbloqueado():void
 }
-class Nebula {
--tipo:String=”Nebula”
+class Nebula extends Heroes{
+
 +SabiduriaAncestral():void
 }
-class Phobos {
--tipo:String=”Phobos”
+class Phobos extends Heroes{
+
 +DisparoLetal():void
 }
-class Deimos {
--tipo:String=”Deimos”
+class Deimos extends Heroes{
+
 +Infiltracion():void
 }
-class Solara {
--tipo:String=”Solara”
+class Solara extends Heroes{
+
 +MurallaDeLuz():void
 }
-class Comet {
--tipo:String=”Comet”
+class Comet extends Heroes{
+
 +GolpeRelampago():void
 }
-class Andromeda {
--tipo:String=”Andromeda”
+class Andromeda extends Heroes{
+
 +RitualEstelar():void
 }
 
 
 
-abstract class Enemigo  {
-    - nombre: String
-    - vida: int
-    - danio: int
+class Enemigo  extends Personaje{
     - comportamientoIA: String
+    - FrecuenciaHabilidad
     + actuar(): void
 }
 
-class DroneCombate {
-    - tipo: String = "Drone"
+class DroneCombate extends Enemigo{
+
     + escanear(): void
 }
 
-class ArañaCósmica  {
-    - tipo: String = "Araña"
+class ArañaCósmica  extends Enemigo{
+
     + lanzarRed(): void
 }
-class PiratasEspaciales {
--tipo:String=”Piratas”
+class PiratasEspaciales extends Enemigo {
+
 +robo():void
 }
-class GiganteDeLava {
--tipo:String=”Gigante”
+class GiganteDeLava extends Enemigo{
+
 +erupción():void
 }
 
@@ -175,38 +123,32 @@ class Casillas  {
     - x: int
     - y: int
     - tipo: String
-    - contenido: Objeto
+    - contenido:
     - peligro: String
-    + estaOcupada(): boolean
+    + estaOcupada(): boolean ObjetoMagico
 }
 
-class Objeto {
+class ObjetoMagico {
     - nombre: String
     - efecto: String
     - rangoUso: int
     + usar(): void
 }
-class PocionCurativa{
--nombre: "Pocion Curativa"
--efecto: 3,5
--rangoUso: 1
+class PocionCurativa extends ObjetoMagico{
+
 +restauraVida()
 }
-class EscudoEnergia{
--nombre: "Escudo de energia"
--efecto: 4
--rangoUso: 1
+class EscudoEnergia extends ObjetoMagico{
+
 +Absorbe()
 }
-class BombaPlasma{
--nombre: Bomba de BombaPlasma
--efecto: 3
--danno: int: 4,6
--rangoUso: 5
+class BombaPlasma extends ObjetoMagico{
+-danno: int
+
 +Explota()
 }
 
-class Acertijo {
+class Acertijo  {
     - descripcion: String
     - solucion: String
     + resolver(intento: String): boolean
@@ -223,44 +165,18 @@ class Juego {
 }
 
 
-Enemigo "1" *-- "1*" DroneCombate
-Enemigo "1" *-- "1*" ArañaCósmica
-Enemigo "1" *-- "1*" PiratasEspaciales
-Enemigo "1" *-- "1*" GiganteDeLava
-Tablero "1" *-- "1*" Casillas
 
-Casillas "1" o-left- "0..1" Objeto: tiene
+
+
 
 Juego "1" *-- "1" Tablero: tiene
 
-Juego "1" *-- "1..*" Enemigo: tiene
-Juego "1" *-- "0..*" Acertijo: tiene
 
-Personaje -- Casillas: ocupa >
-Enemigo -- Casillas: ocupa >
+Juego "1" *-- "1..*" Acertijo: tiene
 
-CapitanOrion "1" *-up- "1..*" Personaje: tiene
-Zorak "1" *-up- "1..*" Personaje :tiene
-Quasar "1" *-up- "1..*" Personaje: tiene
-Titan"1" *-up- "1..*" Personaje : tiene
-Eclipse"1" *-up- "1..*" Personaje: tiene
-Nova"1" *-up- "1..*" Personaje: tiene
-Lyra"1" *-up- "1..*" Personaje: tiene
-Stella"1" *-up- "1..*" Personaje: tiene
-Vortex"1" *-up- "1..*" Personaje: tiene
-Aurora"1" *-up- "1..*" Personaje: tiene
-Blaze"1" *-up- "1..*" Personaje: tiene
-Luna"1" *-up- "1..*" Personaje: tiene
-Cygnus"1" *-up- "1..*" Personaje: tiene
-OrionJr"1" *-up- "1..*" Personaje: tiene
-Nebula"1" *-up- "1..*" Personaje: tiene
-Phobos"1" *-up- "1..*" Personaje: tiene
-Deimos "1" *-up- "1..*" Personaje: tiene
-Solara"1" *-up- "1..*" Personaje: tiene
-Andromeda "1" *-up- "1..*" Personaje: tiene
-Comet"1" *-up- "1..*" Personaje: tiene
+Juego "1" *-- "1..*" Personaje
 
-PocionCurativa "1" *-- "1..*" Objeto: tiene
-BombaPlasma "1" *-- "1..*" Objeto: tiene
-EscudoEnergia"1" *-- "1..*" Objeto: tiene
+Casillas "1" *-- "1..*" Personaje: tiene
+Tablero "1" *-- "1..*" Casillas: tiene
+Casillas "1" *-- "1..*" ObjetoMagico: tiene
 @enduml
