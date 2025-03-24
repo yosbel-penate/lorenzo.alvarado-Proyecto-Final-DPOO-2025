@@ -1,81 +1,161 @@
 @startuml
+class Personaje{
+-nombre: String
+-vida: int
+-Danno: int
+-HabilidadEspecial: String
+}
+class Heroes extends Personaje{
 
-abstract class Personaje {
-    - nombre: String
-    - vida: int
-    - energia: int5
     - rangoMovimiento: int
     - rangoAtaque: int
-    - habilidades: List<Habilidad>
-    + mover(casillaDestino: Casilla): void
+    + mover(casillaDestino: Casillas): void
     + atacar(objetivo: Enemigo): void
-    + usarHabilidad(habilidad: Habilidad): void
+    + usarHabilidad(): void
+}
+ class CapitanOrion extends Heroes{
++InspiracionGalactica():void
+
+}
+class Nova extends Heroes{
++DesactivarTrampas():void
+}
+class Zorak extends Heroes {
++GolpeDeEnergia():void
+}
+class Lyra extends Heroes{
++CuracionCosmica():void
+}
+class Quasar extends Heroes{
++ReparacionRapida():void
+}
+class Eclipse extends Heroes{
++AtaqueFurtivo():void
+}
+class Titan extends Heroes{
++EscudoEnergia():void
+}
+class Stella extends Heroes{
++ControlMental():void
+}
+class Vortex extends Heroes{
++TormentaCosmica():void
+}
+class Aurora extends Heroes{
++Negociacion():void
+}
+    class Blaze extends Heroes{
++DisparoExplosivo():void
+}
+class Luna extends Heroes{
++InstintoDeCazadora():void
+}
+class Cygnus extends Heroes{
+
++ManiobraEvasiva():void
+}
+class OrionJr extends Heroes{
+
++PotencialDesbloqueado():void
+}
+class Nebula extends Heroes{
+
++SabiduriaAncestral():void
+}
+class Phobos extends Heroes{
+
++DisparoLetal():void
+}
+class Deimos extends Heroes{
+
++Infiltracion():void
+}
+class Solara extends Heroes{
+
++MurallaDeLuz():void
+}
+class Comet extends Heroes{
+
++GolpeRelampago():void
+}
+class Andromeda extends Heroes{
+
++RitualEstelar():void
 }
 
-class Jugador extends Personaje {
-    - experiencia: int
-    + resolverAcertijo(acertijo: Acertijo): boolean
-}
 
-abstract class Enemigo {
-    - nombre: String
-    - vida: int
-    - danio: int
+
+class Enemigo  extends Personaje{
     - comportamientoIA: String
+    - FrecuenciaHabilidad
     + actuar(): void
 }
 
-class DroneCombate extends Enemigo {
-    - tipo: String = "Drone"
+class DroneCombate extends Enemigo{
+
     + escanear(): void
 }
 
-class ArañaCósmica extends Enemigo {
-    - tipo: String = "Araña"
+class ArañaCósmica  extends Enemigo{
+
     + lanzarRed(): void
 }
+class PiratasEspaciales extends Enemigo {
 
-class Habilidad {
-    - nombre: String
-    - tipo: String
-    - costoEnergia: int
-    - rango: int
-    - efecto: String
-    + activar(origen: Personaje, objetivo: Casilla): void
++robo():void
+}
+class GiganteDeLava extends Enemigo{
+
++erupción():void
 }
 
+
+
 class Tablero {
-    - casillas: List<Casilla>
+    - casillas: List<Casillas>
     - ancho: int
     - alto: int
     + generarNivel(nivel: int): void
-    + obtenerCasilla(x: int, y: int): Casilla
+    + obtenerCasillas(x: int, y: int): Casillas
 }
 
-class Casilla {
+class Casillas  {
     - x: int
     - y: int
     - tipo: String
-    - contenido: Objeto
+    - contenido:
     - peligro: String
-    + estaOcupada(): boolean
+    + estaOcupada(): boolean ObjetoMagico
 }
 
-class Objeto {
+class ObjetoMagico {
     - nombre: String
-    - tipo: String
     - efecto: String
-    + usar(jugador: Jugador): void
+    - rangoUso: int
+    + usar(): void
+}
+class PocionCurativa extends ObjetoMagico{
+
++restauraVida()
+}
+class EscudoEnergia extends ObjetoMagico{
+
++Absorbe()
+}
+class BombaPlasma extends ObjetoMagico{
+-danno: int
+
++Explota()
 }
 
-class Acertijo {
+class Acertijo  {
     - descripcion: String
     - solucion: String
     + resolver(intento: String): boolean
 }
 
 class Juego {
-    - jugadores: List<Jugador>
+
     - enemigos: List<Enemigo>
     - tablero: Tablero
     - turnoActual: int
@@ -84,4 +164,19 @@ class Juego {
     + verificarVictoria(): boolean
 }
 
+
+
+
+
+
+Juego "1" *-- "1" Tablero: tiene
+
+
+Juego "1" *-- "1..*" Acertijo: tiene
+
+Juego "1" *-- "1..*" Personaje
+
+Casillas "1" *-- "1..*" Personaje: tiene
+Tablero "1" *-- "1..*" Casillas: tiene
+Casillas "1" *-- "1..*" ObjetoMagico: tiene
 @enduml
