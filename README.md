@@ -40,15 +40,15 @@ Funciones del menú
 
 Nuestro proyecto está actualmente en fase de planificación, con desarrollo inicial del motor de juego y mecánicas principales.
 ## Division del proyecto por miembros:
-Johan Moran: Gestión de personajes y enemigos 
+Johan Moran Sarmiento: Gestión de personajes y enemigos 
 
 Lorenzo Pérez Alvarado: Interfaz de usuario y efectos visuales
 
-Jonatha Gorta Padron: Implementar el sistema de combate por turnos
+Jonathan Horta Padron: Implementar el sistema de combate por turnos
 
-Anisleidy Guerra: Diseño de tablero y movimiento 
+Anisleidy Guerra Díaz: Diseño de tablero y movimiento 
 
-Alejandro Lopez Almeida: Acertijos y eventos especiales
+Alejandro López Almeida: Acertijos y eventos especiales
 
 ## Requisitos del Sistema
 Lenguaje: Java 11 o superior.
