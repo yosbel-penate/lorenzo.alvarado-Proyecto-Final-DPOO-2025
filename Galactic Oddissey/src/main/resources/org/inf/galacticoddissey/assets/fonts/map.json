@@ -1,0 +1,129 @@
+{
+  "tileSize": 32,
+  "grid": {
+    "rows": 10,
+    "columns": 10
+  },
+  "tiles": [
+    [
+      { "x": 0, "y": 0, "type": "star" },
+      { "x": 1, "y": 0, "type": "empty" },
+      { "x": 2, "y": 0, "type": "empty" },
+      { "x": 3, "y": 0, "type": "planet" },
+      { "x": 4, "y": 0, "type": "empty" },
+      { "x": 5, "y": 0, "type": "empty" },
+      { "x": 6, "y": 0, "type": "asteroid" },
+      { "x": 7, "y": 0, "type": "empty" },
+      { "x": 8, "y": 0, "type": "star" },
+      { "x": 9, "y": 0, "type": "empty" }
+    ],
+    [
+      { "x": 0, "y": 1, "type": "empty" },
+      { "x": 1, "y": 1, "type": "nebula" },
+      { "x": 2, "y": 1, "type": "empty" },
+      { "x": 3, "y": 1, "type": "empty" },
+      { "x": 4, "y": 1, "type": "empty" },
+      { "x": 5, "y": 1, "type": "spaceStation" },
+      { "x": 6, "y": 1, "type": "empty" },
+      { "x": 7, "y": 1, "type": "empty" },
+      { "x": 8, "y": 1, "type": "empty" },
+      { "x": 9, "y": 1, "type": "planet" }
+    ],
+    [
+      { "x": 0, "y": 2, "type": "empty" },
+      { "x": 1, "y": 2, "type": "empty" },
+      { "x": 2, "y": 2, "type": "star" },
+      { "x": 3, "y": 2, "type": "empty" },
+      { "x": 4, "y": 2, "type": "empty" },
+      { "x": 5, "y": 2, "type": "empty" },
+      { "x": 6, "y": 2, "type": "empty" },
+      { "x": 7, "y": 2, "type": "asteroid" },
+      { "x": 8, "y": 2, "type": "empty" },
+      { "x": 9, "y": 2, "type": "empty" }
+    ],
+    [
+      { "x": 0, "y": 3, "type": "planet" },
+      { "x": 1, "y": 3, "type": "empty" },
+      { "x": 2, "y": 3, "type": "empty" },
+      { "x": 3, "y": 3, "type": "empty" },
+      { "x": 4, "y": 3, "type": "star" },
+      { "x": 5, "y": 3, "type": "empty" },
+      { "x": 6, "y": 3, "type": "empty" },
+      { "x": 7, "y": 3, "type": "empty" },
+      { "x": 8, "y": 3, "type": "empty" },
+      { "x": 9, "y": 3, "type": "nebula" }
+    ],
+    [
+      { "x": 0, "y": 4, "type": "empty" },
+      { "x": 1, "y": 4, "type": "asteroid" },
+      { "x": 2, "y": 4, "type": "empty" },
+      { "x": 3, "y": 4, "type": "empty" },
+      { "x": 4, "y": 4, "type": "empty" },
+      { "x": 5, "y": 4, "type": "empty" },
+      { "x": 6, "y": 4, "type": "star" },
+      { "x": 7, "y": 4, "type": "empty" },
+      { "x": 8, "y": 4, "type": "planet" },
+      { "x": 9, "y": 4, "type": "empty" }
+    ],
+    [
+      { "x": 0, "y": 5, "type": "empty" },
+      { "x": 1, "y": 5, "type": "empty" },
+      { "x": 2, "y": 5, "type": "empty" },
+      { "x": 3, "y": 5, "type": "nebula" },
+      { "x": 4, "y": 5, "type": "empty" },
+      { "x": 5, "y": 5, "type": "empty" },
+      { "x": 6, "y": 5, "type": "empty" },
+      { "x": 7, "y": 5, "type": "empty" },
+      { "x": 8, "y": 5, "type": "empty" },
+      { "x": 9, "y": 5, "type": "star" }
+    ],
+    [
+      { "x": 0, "y": 6, "type": "empty" },
+      { "x": 1, "y": 6, "type": "planet" },
+      { "x": 2, "y": 6, "type": "empty" },
+      { "x": 3, "y": 6, "type": "empty" },
+      { "x": 4, "y": 6, "type": "asteroid" },
+      { "x": 5, "y": 6, "type": "empty" },
+      { "x": 6, "y": 6, "type": "empty" },
+      { "x": 7, "y": 6, "type": "spaceStation" },
+      { "x": 8, "y": 6, "type": "empty" },
+      { "x": 9, "y": 6, "type": "empty" }
+    ],
+    [
+      { "x": 0, "y": 7, "type": "star" },
+      { "x": 1, "y": 7, "type": "empty" },
+      { "x": 2, "y": 7, "type": "empty" },
+      { "x": 3, "y": 7, "type": "empty" },
+      { "x": 4, "y": 7, "type": "empty" },
+      { "x": 5, "y": 7, "type": "nebula" },
+      { "x": 6, "y": 7, "type": "empty" },
+      { "x": 7, "y": 7, "type": "empty" },
+      { "x": 8, "y": 7, "type": "planet" },
+      { "x": 9, "y": 7, "type": "empty" }
+    ],
+    [
+      { "x": 0, "y": 8, "type": "empty" },
+      { "x": 1, "y": 8, "type": "empty" },
+      { "x": 2, "y": 8, "type": "asteroid" },
+      { "x": 3, "y": 8, "type": "empty" },
+      { "x": 4, "y": 8, "type": "empty" },
+      { "x": 5, "y": 8, "type": "empty" },
+      { "x": 6, "y": 8, "type": "empty" },
+      { "x": 7, "y": 8, "type": "star" },
+      { "x": 8, "y": 8, "type": "empty" },
+      { "x": 9, "y": 8, "type": "empty" }
+    ],
+    [
+      { "x": 0, "y": 9, "type": "empty" },
+      { "x": 1, "y": 9, "type": "planet" },
+      { "x": 2, "y": 9, "type": "empty" },
+      { "x": 3, "y": 9, "type": "spaceStation" },
+      { "x": 4, "y": 9, "type": "empty" },
+      { "x": 5, "y": 9, "type": "empty" },
+      { "x": 6, "y": 9, "type": "nebula" },
+      { "x": 7, "y": 9, "type": "empty" },
+      { "x": 8, "y": 9, "type": "empty" },
+      { "x": 9, "y": 9, "type": "star" }
+    ]
+  ]
+}
