@@ -1,8 +1,8 @@
-package Class;
+package org.inf.galacticoddissey.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import org.inf.galacticoddissey.HelloApplication;
+import org.inf.galacticoddissey.main.GalacticOdysseyGame;
 
 public class Player {
     private double x; // Coordenada X en píxeles
@@ -61,13 +61,13 @@ public class Player {
         int newTileX = tileX;
         int newTileY = tileY;
 
-        if (HelloApplication.right) newTileX++;
-        if (HelloApplication.left) newTileX--;
-        if (HelloApplication.up) newTileY--;
-        if (HelloApplication.down) newTileY++;
+        if (GalacticOdysseyGame.right) newTileX++;
+        if (GalacticOdysseyGame.left) newTileX--;
+        if (GalacticOdysseyGame.up) newTileY--;
+        if (GalacticOdysseyGame.down) newTileY++;
 
         if ((newTileX != tileX || newTileY != tileY) &&
-                HelloApplication.isTileWalkable(newTileX, newTileY)) {
+                GalacticOdysseyGame.isTileWalkable(newTileX, newTileY)) {
 
             tileX = newTileX;
             tileY = newTileY;
@@ -75,10 +75,10 @@ public class Player {
             movementPoints--;
 
             // Resetea las teclas después de q se mueve
-            HelloApplication.right = false;
-            HelloApplication.left = false;
-            HelloApplication.up = false;
-            HelloApplication.down = false;
+            GalacticOdysseyGame.right = false;
+            GalacticOdysseyGame.left = false;
+            GalacticOdysseyGame.up = false;
+            GalacticOdysseyGame.down = false;
         }
     }
 

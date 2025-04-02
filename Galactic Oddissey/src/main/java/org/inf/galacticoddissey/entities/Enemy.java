@@ -1,4 +1,4 @@
-package Class;
+package org.inf.galacticoddissey.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

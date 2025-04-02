@@ -1,4 +1,4 @@
-module org.inf.galacticoddissey {
+module org.inf.galacticoddissey.main {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -14,5 +14,5 @@ module org.inf.galacticoddissey {
     requires org.json;
 
     opens org.inf.galacticoddissey to javafx.fxml;
-    exports org.inf.galacticoddissey;
+    exports org.inf.galacticoddissey.main;
 }

@@ -1,7 +1,6 @@
-package org.inf.galacticoddissey;
+package org.inf.galacticoddissey.main;
 
-import Class.Player;
-import Class.Enemy;
+import org.inf.galacticoddissey.entities.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -19,7 +18,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HelloApplication extends Application {
+public class GalacticOdysseyGame extends Application {
     private GraphicsContext graphics;
     private Group root;
     private Scene scene;
@@ -63,7 +62,7 @@ public class HelloApplication extends Application {
 
     private void createEnemies() {
             //Ruta del enemigo
-            String enemyImagePath = "/org/inf/galacticoddissey/enemigo.png"; // Ajusta esta ruta
+            String enemyImagePath = "/org/inf/galacticoddissey/assets/images/enemigo.png";
 
             //Crear los enemigos
             enemies.add(new Enemy(5, 5, enemyImagePath));
@@ -101,7 +100,7 @@ public class HelloApplication extends Application {
     }
 
     private void initializeComponents() {
-        player = new Player(1, 1, "/org/inf/galacticoddissey/personaje.png");
+        player = new Player(1, 1, "/org/inf/galacticoddissey/assets/images/personaje.png");
         canvas = new Canvas(mapWidth * tileWidth, mapHeight * tileHeight);
         graphics = canvas.getGraphicsContext2D();
         root = new Group(canvas);
@@ -138,10 +137,10 @@ public class HelloApplication extends Application {
 
     private void loadTiledMap() {
         try {
-            InputStream is = getClass().getResourceAsStream("/org/inf/galacticoddissey/map.json");
+            InputStream is = getClass().getResourceAsStream("/org/inf/galacticoddissey/assets/fonts/map.json");
             JSONObject mapData = new JSONObject(new JSONTokener(is));
 
-            String tilesetPath = "/org/inf/galacticoddissey/tileset.png";
+            String tilesetPath = "/org/inf/galacticoddissey/assets/images/tileset.png";
             tilesetImage = new Image(getClass().getResourceAsStream(tilesetPath));
 
             mapWidth = mapData.getJSONObject("grid").getInt("columns");
@@ -181,10 +180,12 @@ public class HelloApplication extends Application {
         scene.setOnKeyPressed(e -> {
             if (playerTurn) {
                 switch (e.getCode()) {
-                    case RIGHT: right = true; break;
+                    case RIGHT: right = true;
+                        break;
                     case LEFT: left = true; break;
                     case UP: up = true; break;
-                    case DOWN: down = true; break;
+                    case DOWN: down = true;
+                            break;
                     case ENTER: endPlayerTurn(); break;
                 }
             }
