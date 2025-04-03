@@ -17,6 +17,8 @@ import org.json.JSONTokener;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class GalacticOdysseyGame extends Application {
     private GraphicsContext graphics;
@@ -52,6 +54,8 @@ public class GalacticOdysseyGame extends Application {
         initializeComponents();
         setupEventHandlers();
         createEnemies();
+        playBackgroundMusic();
+
 
         stage.setScene(scene);
         stage.setTitle("Galactic Odyssey: The Cosmic Enigma");
@@ -106,6 +110,17 @@ public class GalacticOdysseyGame extends Application {
         root = new Group(canvas);
         scene = new Scene(root);
     }
+    private MediaPlayer mediaPlayer;
+
+    private void playBackgroundMusic() {
+        String musicFile = "/org/inf/galacticoddissey/assets/sounds/intro.mp3"; // Asegúrate de que el archivo esté dentro de resources
+        // Ruta relativa al archivo de música
+        Media media = new Media(getClass().getResource(musicFile).toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Repetir en bucle
+        mediaPlayer.play();
+    }
+
 
     private ImageView createTileView(String type, Image tilesetImage) {
         int tileIndex = 0;
