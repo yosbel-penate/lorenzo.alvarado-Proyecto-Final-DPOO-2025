@@ -113,8 +113,8 @@ public class GalacticOdysseyGame extends Application {
     private MediaPlayer mediaPlayer;
 
     private void playBackgroundMusic() {
-        String musicFile = "/org/inf/galacticoddissey/assets/sounds/intro.mp3"; // Asegúrate de que el archivo esté dentro de resources
-        // Ruta relativa al archivo de música
+        String musicFile = "/org/inf/galacticoddissey/assets/sounds/intro.mp3"; 
+        
         Media media = new Media(getClass().getResource(musicFile).toExternalForm());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Repetir en bucle
