@@ -1,14 +1,22 @@
-class PirataEspacial extends Enemigo {
-    public PirataEspacial(String nombre, int vida, int dano, String habilidadEspecial,
-                        String comportamientoIA, String frecuenciaHabilidad) {
-        super(nombre, vida, dano, habilidadEspecial, comportamientoIA, frecuenciaHabilidad);
+package enemies;
+
+public class PiratasEspaciales extends enemies {
+    public PiratasEspaciales(String name, int RangeMovement, int RangeDamage, String SpecialAbility, int life, int FrequencySpecialAbility) {
+        super(name, RangeMovement, RangeDamage, SpecialAbility, life, FrequencySpecialAbility);
+    }
+    public void setAttack(){
+        if (aleatorio<3){
+            damage=2;
+        }else if (aleatorio<5){// serian 4 tipos de ataques habiendo mas posibilidades para q caiga el ataque de 2 y de 4 de danio
+            damage=3;
+        } else if (aleatorio<8) {
+            damage=4;
+        }else {
+            damage=5;
+        }
     }
 
-    @Override
-    public void actuar() {
-        // Implementación específica
-    }
-    public void robar() {
-        // Implementación específica de PirataEspacial
-    }
+
+
+
 }
