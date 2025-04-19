@@ -1,3 +1,4 @@
+package Class;
 public class Andromeda extends Heroes{
     public Andromeda(String nombre, int vida, int dano, String habilidadEspecial,
                   int rangoMovimiento, int rangoAtaque) {

@@ -1,4 +1,4 @@
-// Clase Acertijo
+package Class;// Clase Acertijo
 
     public class Acertijo {
         private String descripcion;
