@@ -12,6 +12,7 @@ module org.inf.galacticoddissey.main {
     requires com.almasb.fxgl.all;
     requires jdk.unsupported.desktop;
     requires org.json;
+    requires javafx.media;
 
     opens org.inf.galacticoddissey to javafx.fxml;
     exports org.inf.galacticoddissey.main;

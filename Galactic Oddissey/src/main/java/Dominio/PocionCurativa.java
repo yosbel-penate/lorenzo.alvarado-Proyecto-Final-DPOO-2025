@@ -16,4 +16,3 @@ public class PocionCurativa extends ObjetoMagico {
     }
 
 
-}

@@ -17,6 +17,8 @@ import org.json.JSONTokener;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class GalacticOdysseyGame extends Application {
     private GraphicsContext graphics;
@@ -52,21 +54,25 @@ public class GalacticOdysseyGame extends Application {
         initializeComponents();
         setupEventHandlers();
         createEnemies();
+        playBackgroundMusic();
+
 
         stage.setScene(scene);
         stage.setTitle("Galactic Odyssey: The Cosmic Enigma");
         stage.show();
+        stage.setFullScreen(false);   //poner a pantalla completa
+        stage.setResizable(false);  //evitar que se cambie la resolucion de la pantalla
 
         startGameLoop();
     }
 
     private void createEnemies() {
-            //Ruta del enemigo
-            String enemyImagePath = "/org/inf/galacticoddissey/assets/images/enemigo.png";
+        //Ruta del enemigo
+        String enemyImagePath = "/org/inf/galacticoddissey/assets/images/enemigo.png";
 
-            //Crear los enemigos
-            enemies.add(new Enemy(5, 5, enemyImagePath));
-            enemies.add(new Enemy(8, 2, enemyImagePath));
+        //Crear los enemigos
+        enemies.add(new Enemy(5, 5, enemyImagePath));
+        enemies.add(new Enemy(8, 2, enemyImagePath));
 
     }
 
@@ -106,6 +112,17 @@ public class GalacticOdysseyGame extends Application {
         root = new Group(canvas);
         scene = new Scene(root);
     }
+    private MediaPlayer mediaPlayer;
+
+    private void playBackgroundMusic() {
+        String musicFile = "/org/inf/galacticoddissey/assets/sounds/intro.mp3";
+
+        Media media = new Media(getClass().getResource(musicFile).toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Repetir en bucle
+        mediaPlayer.play();
+    }
+
 
     private ImageView createTileView(String type, Image tilesetImage) {
         int tileIndex = 0;
@@ -185,7 +202,7 @@ public class GalacticOdysseyGame extends Application {
                     case LEFT: left = true; break;
                     case UP: up = true; break;
                     case DOWN: down = true;
-                            break;
+                        break;
                     case ENTER: endPlayerTurn(); break;
                 }
             }
