@@ -1,7 +1,7 @@
 package Dominio;
-public class Quasar extends Heroes{
+public class Quasar extends Heroes {
     public Quasar(String nombre, int vida, int dano, String habilidadEspecial,
-                        int rangoMovimiento, int rangoAtaque) {
+                  int rangoMovimiento, int rangoAtaque) {
         super(nombre, vida, dano, habilidadEspecial, rangoMovimiento, rangoAtaque);
     }
 
@@ -14,9 +14,13 @@ public class Quasar extends Heroes{
     public void atacar(Enemigo objetivo) {
         // Implementación específica
     }
+
     @Override
     public void usarHabilidad() {
         // Implementación específica
     }
-    public void reparacionRapida() {}
+
+    public void reparacionRapida() {
+    }
+
 }
