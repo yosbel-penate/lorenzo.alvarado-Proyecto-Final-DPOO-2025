@@ -1,8 +1,8 @@
 {
   "tileSize": 32,
   "grid": {
-    "rows": 10,
-    "columns": 10
+    "rows": 27,
+    "columns": 48
   },
   "tiles": [
     [
@@ -15,7 +15,8 @@
       { "x": 6, "y": 0, "type": "asteroid" },
       { "x": 7, "y": 0, "type": "empty" },
       { "x": 8, "y": 0, "type": "star" },
-      { "x": 9, "y": 0, "type": "empty" }
+      { "x": 9, "y": 0, "type": "empty" },
+      { "x": 10, "y": 0, "type": "star" }
     ],
     [
       { "x": 0, "y": 1, "type": "empty" },
@@ -99,7 +100,14 @@
       { "x": 6, "y": 7, "type": "empty" },
       { "x": 7, "y": 7, "type": "empty" },
       { "x": 8, "y": 7, "type": "planet" },
-      { "x": 9, "y": 7, "type": "empty" }
+      { "x": 9, "y": 7, "type": "empty" },
+      { "x": 10, "y": 7, "type": "empty" },
+      { "x": 11, "y": 7, "type": "empty" },
+      { "x": 12, "y": 7, "type": "empty" },
+      { "x": 13, "y": 7, "type": "empty" },
+      { "x": 14, "y": 7, "type": "empty" },
+      { "x": 15, "y": 7, "type": "empty" },
+      { "x": 20, "y": 7, "type": "planet" }
     ],
     [
       { "x": 0, "y": 8, "type": "empty" },

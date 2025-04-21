@@ -14,7 +14,6 @@ public class Quasar extends Heroes{
     public void atacar(Enemigo objetivo) {
         // Implementación específica
     }
-
     @Override
     public void usarHabilidad() {
         // Implementación específica

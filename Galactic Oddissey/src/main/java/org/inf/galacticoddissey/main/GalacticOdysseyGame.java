@@ -66,6 +66,7 @@ public class GalacticOdysseyGame extends Application {
         startGameLoop();
     }
 
+
     private void createEnemies() {
         //Ruta del enemigo
         String enemyImagePath = "/org/inf/galacticoddissey/assets/images/enemigo.png";
@@ -111,6 +112,7 @@ public class GalacticOdysseyGame extends Application {
         graphics = canvas.getGraphicsContext2D();
         root = new Group(canvas);
         scene = new Scene(root);
+        System.out.println("La altura es "+mapWidth*tileWidth + " El ancho es "+mapHeight*tileHeight);
     }
     private MediaPlayer mediaPlayer;
 
@@ -139,8 +141,8 @@ public class GalacticOdysseyGame extends Application {
     }
 
     private void createFallbackMap() {
-        mapWidth = 10;
-        mapHeight = 10;
+        mapWidth = 27;
+        mapHeight = 48;
         tileWidth = 32;
         tileHeight = 32;
         tileMap = new int[mapHeight][mapWidth];
