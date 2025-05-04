@@ -8,3 +8,4 @@ public enum EntityType {
     ITEM,         // Represents an item
     OBSTACLE      // Represents an obstacle
 }
+
