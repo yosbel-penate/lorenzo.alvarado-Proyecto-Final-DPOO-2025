@@ -32,7 +32,7 @@ import java.util.List;
 import levels.level1.Level1;
 import levels.level2.Level2;
 
-public class MainApp extends GameApplication {
+public class App extends GameApplication {
 
     // Controlador del menú
     private MenuController menuController;
