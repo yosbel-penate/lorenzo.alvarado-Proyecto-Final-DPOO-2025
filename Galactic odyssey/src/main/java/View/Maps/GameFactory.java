@@ -23,7 +23,7 @@ public class GameFactory implements EntityFactory {
 
     return FXGL.entityBuilder()
             .at(x, y)
-            .type(EntityType.OBSTACULOS)
+            .type(EntityType.OBSTACLE)
             .viewWithBBox(new Rectangle(w, h, Color.TRANSPARENT))
             .build();
   }
