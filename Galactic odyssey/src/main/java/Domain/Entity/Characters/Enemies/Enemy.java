@@ -1,6 +1,6 @@
-package Domain.Entity.Characters.Players;
+package Domain.Entity.Characters.Enemies;
 
-public abstract class Hero {
+public abstract class Enemy {
     public String name;
     public int health;
     public int moveRange;
@@ -8,11 +8,12 @@ public abstract class Hero {
     public int minDamage;
     public int maxDamage;
     protected int specialCooldown;
-    public int currentCooldown;
+    protected int currentCooldown;
     protected int x, y;
+    protected boolean active;
 
-    public Hero(String name, int health, int moveRange, int attackRange,
-                int minDamage, int maxDamage, int specialCooldown) {
+    public Enemy(String name, int health, int moveRange, int attackRange,
+                 int minDamage, int maxDamage, int specialCooldown) {
         this.name = name;
         this.health = health;
         this.moveRange = moveRange;
@@ -21,6 +22,7 @@ public abstract class Hero {
         this.maxDamage = maxDamage;
         this.specialCooldown = specialCooldown;
         this.currentCooldown = 0;
+        this.active = false;
     }
 
     public abstract void useSpecialAbility();
@@ -41,17 +43,18 @@ public abstract class Hero {
         else if (y > ty) y--;
     }
 
-    public void takeDamage(int amount) {
-        health -= amount;
-        if (health < 0) {
-            health = 0;
-        }
-
-        System.out.println(name + " recibe " + amount + " de daño. Vida actual: " + health);
-    }
-
-
     public void setPosition(int x, int y) { this.x = x; this.y = y; }
     public int getX() { return x; }
     public int getY() { return y; }
+
+    public void activate() { active = true; }
+    public boolean isActive() { return active; }
+
+    // Método para recibir daño
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (health < 0) {
+            health = 0;
+        }
+    }
 }
