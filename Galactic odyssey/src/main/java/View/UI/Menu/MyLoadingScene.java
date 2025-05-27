@@ -1,4 +1,4 @@
-package App;
+package View.UI.Menu;
 
 import com.almasb.fxgl.app.scene.LoadingScene;
 import com.almasb.fxgl.dsl.FXGL;
