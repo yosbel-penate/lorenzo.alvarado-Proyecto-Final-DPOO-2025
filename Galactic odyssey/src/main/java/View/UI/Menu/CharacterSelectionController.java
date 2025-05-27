@@ -1,24 +1,32 @@
-package App;
+package View.UI.Menu;
 
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CharacterSelectionController {
 
     private StackPane selectionPane;
     private List<String> selectedCharacters = new ArrayList<>();
     private Button playButton;
-    private Runnable onSelectionComplete;
+    private Consumer<List<String>> onSelectionComplete;
+    private Runnable onBackToMenu;
     private Label selectionCounter;
 
     private static class CharacterData {
@@ -35,11 +43,11 @@ public class CharacterSelectionController {
         }
     }
 
-    public CharacterSelectionController(Runnable onSelectionComplete) {
+    public CharacterSelectionController(Consumer<List<String>> onSelectionComplete, Runnable onBackToMenu) {
         this.onSelectionComplete = onSelectionComplete;
+        this.onBackToMenu = onBackToMenu;
         selectionPane = new StackPane();
 
-        // Fondo semitransparente
         Rectangle bg = new Rectangle(800, 600, Color.rgb(0, 0, 0, 0.85));
         bg.setArcWidth(20);
         bg.setArcHeight(20);
@@ -170,27 +178,14 @@ public class CharacterSelectionController {
         buttonPanel.setAlignment(Pos.CENTER);
         buttonPanel.setStyle("-fx-padding: 15 0 15 0;");
 
-        playButton = createMenuButton("JUGAR", this::showLevelSelector);
+        playButton = createMenuButton("JUGAR", this::startGame);
         playButton.setDisable(true);
 
-        Button backButton = createMenuButton("VOLVER", this::returnToMenu);
+        Button backButton = createMenuButton("VOLVER", onBackToMenu);
 
         buttonPanel.getChildren().addAll(backButton, playButton);
         mainContainer.getChildren().addAll(title, selectionCounter, scrollPane, buttonPanel);
         selectionPane.getChildren().add(mainContainer);
-    }
-
-    private void showLevelSelector() {
-        if (selectedCharacters.size() == 5) {
-            LevelSelectorController levelSelector = new LevelSelectorController(this::returnToMenu);
-            selectionPane.getChildren().clear();
-
-            Rectangle bg = new Rectangle(800, 600, Color.rgb(0, 0, 0, 0.85));
-            bg.setArcWidth(20);
-            bg.setArcHeight(20);
-
-            selectionPane.getChildren().addAll(bg, levelSelector.getSelectorPane());
-        }
     }
 
     private Button createMenuButton(String text, Runnable action) {
@@ -209,27 +204,26 @@ public class CharacterSelectionController {
 
     private List<CharacterData> createCharacterList() {
         List<CharacterData> characters = new ArrayList<>();
-        characters.add(new CharacterData("Guerrero", "warrior.png", 150, "Fuerte y resistente"));
-        characters.add(new CharacterData("Mago", "wizard.png", 80, "Poder mágico devastador"));
-        characters.add(new CharacterData("Arquero", "archer.png", 100, "Precisión a distancia"));
-        characters.add(new CharacterData("Asesino", "assassin.png", 90, "Ataques rápidos y letales"));
-        characters.add(new CharacterData("Sanador", "healer.png", 70, "Cura a sus aliados"));
-        characters.add(new CharacterData("Tanque", "tank.png", 200, "Alta resistencia"));
-        characters.add(new CharacterData("Nigromante", "necromancer.png", 85, "Invoca no muertos"));
-        characters.add(new CharacterData("Berserker", "berserker.png", 120, "Furia en batalla"));
-        characters.add(new CharacterData("Paladín", "paladin.png", 130, "Protección divina"));
-        characters.add(new CharacterData("Ladrón", "thief.png", 95, "Sigilo y astucia"));
-        characters.add(new CharacterData("Druida", "druid.png", 90, "Control de la naturaleza"));
-        characters.add(new CharacterData("Mercenario", "mercenary.png", 110, "Versátil en combate"));
-        characters.add(new CharacterData("Cazador", "hunter.png", 105, "Rastreo y trampas"));
-        characters.add(new CharacterData("Caballero", "knight.png", 140, "Armadura pesada"));
-        characters.add(new CharacterData("Brujo", "warlock.png", 85, "Magia oscura"));
-        characters.add(new CharacterData("Monje", "monk.png", 100, "Artes marciales"));
-        characters.add(new CharacterData("Pícaro", "rogue.png", 95, "Ataques sorpresa"));
-        characters.add(new CharacterData("Elementalista", "elementalist.png", 75, "Control elemental"));
-        characters.add(new CharacterData("Clérigo", "cleric.png", 80, "Sanación y protección"));
-        characters.add(new CharacterData("Explorador", "ranger.png", 110, "Supervivencia y arquería"));
-
+        characters.add(new CharacterData("Andrómeda", "/assets/textures/Menu/andromeda.png", 20, "Ritual Estelar: cura aliados o daña enemigos (5-7 curación o 4-6 daño)."));
+        characters.add(new CharacterData("Aurora", "/assets/textures/Menu/aurora.png", 14, "Negociación: evita combates con facciones enemigas en un radio de 6 casillas."));
+        characters.add(new CharacterData("Blaze", "/assets/textures/Menu/blaze.png", 19, "Disparo Explosivo: causa 5-8 puntos de daño en un radio de 2 casillas."));
+        characters.add(new CharacterData("Capitán Orion", "/assets/textures/Menu/cap_orion.png", 20, "Inspiración Galáctica: aumenta ataque y defensa de aliados cercanos por 2 turnos."));
+        characters.add(new CharacterData("Comet", "/assets/textures/Menu/comet.png", 14, "Golpe Relámpago: ataca dos veces (2-4 daño por golpe)."));
+        characters.add(new CharacterData("Cygnus", "/assets/textures/Menu/cygnus.png", 16, "Maniobra Evasiva: esquiva y aumenta velocidad."));
+        characters.add(new CharacterData("Deimos", "/assets/textures/Menu/deimos.png", 17, "Infiltración: se oculta por 2 turnos y luego inflige 6-8."));
+        characters.add(new CharacterData("Eclipse", "/assets/textures/Menu/eclipse.png", 15, "Ataque Furtivo: daña a un enemigo desprevenido por 6-8 puntos."));
+        characters.add(new CharacterData("Lyra", "/assets/textures/Menu/lyra.png", 18, "Curación Cósmica: restaura 3-5 puntos de salud a aliados cercanos."));
+        characters.add(new CharacterData("Luna", "/assets/textures/Menu/luna.png", 17, "Instinto de Cazadora: revela enemigos ocultos y permite ataque inmediato."));
+        characters.add(new CharacterData("Nebula", "/assets/textures/Menu/nebula.png", 15, "Sabiduría Ancestral: da pistas y aumenta inteligencia de aliados."));
+        characters.add(new CharacterData("Nova", "/assets/textures/Menu/nova.png", 16, "Desactivación de Trampas: desactiva trampas en un radio de 3 casillas."));
+        characters.add(new CharacterData("Orion Jr.", "/assets/textures/Menu/orion_jr.png", 18, "Potencial Desbloqueado: duplica daño y defensa por 1 turno."));
+        characters.add(new CharacterData("Phobos", "/assets/textures/Menu/phobos.png", 22, "Disparo Letal: causa 7-9 daño a enemigos heridos y aturde."));
+        characters.add(new CharacterData("Quasar", "/assets/textures/Menu/quasar.png", 17, "Reparación Rápida: repara equipos y restaura 2-4 puntos de armadura."));
+        characters.add(new CharacterData("Solara", "/assets/textures/Menu/solara.png", 25, "Muralla de Luz: bloquea todo el daño a aliados cercanos por 1 turno."));
+        characters.add(new CharacterData("Stella", "/assets/textures/Menu/stella.png", 16, "Control Mental: controla a un enemigo débil durante 1 turno."));
+        characters.add(new CharacterData("Titan", "/assets/textures/Menu/titan.png", 30, "Escudo de Energía: absorbe 5 puntos de daño para sí mismo o un aliado."));
+        characters.add(new CharacterData("Vortex", "/assets/textures/Menu/vortex.png", 18, "Tormenta Cósmica: daña a todos los enemigos en un radio de 4 casillas."));
+        characters.add(new CharacterData("Zorak", "/assets/textures/Menu/zorak.png", 24, "Golpe de Energía: daña a todos los enemigos en un radio de 2 casillas."));
         return characters;
     }
 
@@ -264,8 +258,10 @@ public class CharacterSelectionController {
                 (selectedCharacters.size() == 5 ? "#4CAF50" : "white") + ";");
     }
 
-    private void returnToMenu() {
-        onSelectionComplete.run();
+    private void startGame() {
+        if (selectedCharacters.size() == 5) {
+            onSelectionComplete.accept(selectedCharacters);
+        }
     }
 
     public StackPane getSelectionPane() {
