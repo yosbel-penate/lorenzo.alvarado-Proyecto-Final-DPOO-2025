@@ -1,4 +1,4 @@
-package App;
+package View.UI.Menu;
 
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.geometry.Insets;
@@ -16,6 +16,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -25,6 +26,8 @@ public class LevelSelectorController {
     private Runnable onBackToMainMenu;
     private Button playButton;
     private String selectedLevel;
+    private List<String> selectedCharacters;
+    private Consumer<String> onLevelSelected;
 
     private static class LevelData {
         String name;
@@ -38,23 +41,22 @@ public class LevelSelectorController {
         }
     }
 
-    public LevelSelectorController(Runnable onBackToMainMenu) {
+    public LevelSelectorController(Runnable onBackToMainMenu, List<String> selectedCharacters, Consumer<String> onLevelSelected) {
         this.onBackToMainMenu = onBackToMainMenu;
+        this.selectedCharacters = selectedCharacters;
+        this.onLevelSelected = onLevelSelected;
         this.selectorPane = new StackPane();
         this.selectedLevel = null;
         initializeUI();
     }
 
     private void initializeUI() {
-        // Fondo semitransparente que se ajusta al tamaño de la ventana
         Rectangle bg = new Rectangle(getAppWidth(), getAppHeight(), Color.rgb(0, 0, 0, 0.85));
         selectorPane.getChildren().add(bg);
-
         showLevelSelection();
     }
 
     private void showLevelSelection() {
-        // Contenedor principal con tamaño ajustado
         VBox mainContainer = new VBox(15);
         mainContainer.setAlignment(Pos.TOP_CENTER);
         mainContainer.setMaxWidth(getAppWidth() * 0.9);
@@ -64,7 +66,6 @@ public class LevelSelectorController {
         Text title = new Text("SELECCIONA UN NIVEL");
         title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: white;");
 
-        // ScrollPane para contener los niveles
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -72,19 +73,16 @@ public class LevelSelectorController {
         scrollPane.setFitToWidth(true);
         scrollPane.setPrefViewportHeight(getAppHeight() * 0.6);
 
-        // Contenedor de niveles (vertical)
         VBox levelsContainer = new VBox(15);
         levelsContainer.setAlignment(Pos.TOP_CENTER);
         levelsContainer.setPadding(new Insets(10));
 
         List<LevelData> levels = createLevelList();
 
-        // Tamaños ajustados para caber en la ventana
         final double levelWidth = getAppWidth() * 0.8;
         final double levelHeight = 150;
 
         for (LevelData level : levels) {
-            // Contenedor rectangular del nivel
             HBox levelContainer = new HBox(15);
             levelContainer.setAlignment(Pos.CENTER_LEFT);
             levelContainer.setMinSize(levelWidth, levelHeight);
@@ -95,7 +93,6 @@ public class LevelSelectorController {
                     + "-fx-border-width: 2px; "
                     + "-fx-border-color: #555555;");
 
-            // Imagen del nivel (ajustada)
             ImageView levelImage = new ImageView();
             try {
                 Image img = new Image(getClass().getResourceAsStream(level.imagePath));
@@ -107,7 +104,6 @@ public class LevelSelectorController {
             levelImage.setFitHeight(120);
             levelImage.setPreserveRatio(true);
 
-            // Contenedor de texto con ajuste de tamaño
             VBox textContainer = new VBox(5);
             textContainer.setAlignment(Pos.CENTER_LEFT);
             textContainer.setPrefWidth(levelWidth - 230);
@@ -123,7 +119,6 @@ public class LevelSelectorController {
 
             textContainer.getChildren().addAll(nameLabel, descriptionLabel);
 
-            // Botón transparente para selección
             Button levelButton = new Button();
             levelButton.setGraphic(levelContainer);
             levelButton.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
@@ -136,7 +131,6 @@ public class LevelSelectorController {
             tooltip.setStyle("-fx-font-size: 12px;");
             Tooltip.install(levelButton, tooltip);
 
-            // Efectos hover
             levelButton.setOnMouseEntered(e -> {
                 levelContainer.setStyle("-fx-background-color: rgba(60, 60, 65, 0.7); "
                         + "-fx-background-radius: 10; "
@@ -169,13 +163,16 @@ public class LevelSelectorController {
 
         scrollPane.setContent(levelsContainer);
 
-        // Botones inferiores
         HBox buttonContainer = new HBox(20);
         buttonContainer.setAlignment(Pos.CENTER);
 
         Button backButton = createMenuButton("VOLVER", onBackToMainMenu);
 
-        playButton = createMenuButton("JUGAR", this::startGame);
+        playButton = createMenuButton("JUGAR", () -> {
+            if (selectedLevel != null) {
+                onLevelSelected.accept(selectedLevel);
+            }
+        });
         playButton.setDisable(true);
 
         buttonContainer.getChildren().addAll(backButton, playButton);
@@ -184,7 +181,6 @@ public class LevelSelectorController {
     }
 
     private void selectLevel(String levelName, HBox levelContainer) {
-        // Resetear selección previa
         selectorPane.lookupAll(".level-button").forEach(node -> {
             Button button = (Button) node;
             HBox container = (HBox) button.getGraphic();
@@ -205,21 +201,14 @@ public class LevelSelectorController {
         playButton.setDisable(false);
     }
 
-    private void startGame() {
-        if (selectedLevel != null) {
-            System.out.println("Iniciando nivel: " + selectedLevel);
-            // Lógica para iniciar el nivel
-        }
-    }
-
     private List<LevelData> createLevelList() {
         List<LevelData> levels = new ArrayList<>();
-        levels.add(new LevelData("PLANETA DESÉRTICO", "level1.png",
-                "Un mundo árido con tormentas de arena y criaturas peligrosas."));
-        levels.add(new LevelData("ESTACIÓN ESPACIAL", "level2.png",
-                "Estación abandonada con tecnología alienígena y secretos ocultos."));
-        levels.add(new LevelData("CIUDAD FLOTANTE", "level3.png",
-                "Metrópolis suspendida en las nubes de Júpiter con desafíos únicos."));
+        levels.add(new LevelData("LA LUNA OLVIDADA", "/assets/textures/Menu/level1.jpg",
+                "Un paisaje lunar con ruinas alienígenas y una puerta sellada que oculta el nucleo celestial, una luna llena de criaturas peligrosas."));
+        levels.add(new LevelData("ESTACIÓN ESPACIAL", "/assets/textures/Menu/level2.jpg",
+                "Un asteroide con pasillos flotantes estrechos, trampas, un portal desactivado y muchos secretos ocultos en sus caminos sin salida."));
+        levels.add(new LevelData("CIUDAD FLOTANTE", "/assets/textures/Menu/level3.jpg",
+                "Una estación espacial dentro de una anomalía gravitacional con peligros constantes y desafíos únicos."));
         return levels;
     }
 
