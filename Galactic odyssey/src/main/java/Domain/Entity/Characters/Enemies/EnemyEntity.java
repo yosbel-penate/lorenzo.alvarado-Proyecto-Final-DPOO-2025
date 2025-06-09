@@ -6,15 +6,21 @@ import Domain.Entity.EntityType;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import java.util.*;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.Node;
+
 public class EnemyEntity {
     private Entity enemyEntity;
-    private DroneCombate logic;
+    private Enemy logic;
     private List<PlayerEntity> targets;
     private final int TILE_SIZE = 56;
     private TurnManager turnManager;
@@ -24,62 +30,58 @@ public class EnemyEntity {
     private static final double MAX_OFFSET = 8.0;
     private static final Map<Point2D, EnemyEntity> POSITION_MAP = new HashMap<>();
 
-    public EnemyEntity(List<PlayerEntity> targets, TurnManager manager) {
-        this.logic = new DroneCombate();
+    public EnemyEntity(Enemy logic, List<PlayerEntity> targets, TurnManager manager) {
+        this.logic = logic;
         this.targets = new ArrayList<>(targets);
         this.turnManager = manager;
         assignVisualOffset();
     }
+
 
     private void assignVisualOffset() {
         this.visualOffsetX = (random.nextDouble() - 0.5) * MAX_OFFSET;
         this.visualOffsetY = (random.nextDouble() - 0.5) * MAX_OFFSET;
     }
 
-    public void spawnEnemy(int x, int y) {
-        Point2D desiredPos = new Point2D(x, y);
-        Point2D finalPos = findAvailablePosition(desiredPos);
 
-        logic.setPosition((int) finalPos.getX(), (int) finalPos.getY());
-        logic.activate();
 
-        enemyEntity = FXGL.entityBuilder()
-                .type(EntityType.ENEMY)
-                .at(finalPos.getX() * TILE_SIZE + visualOffsetX, finalPos.getY() * TILE_SIZE + visualOffsetY)
-                .viewWithBBox(FXGL.texture("drone.png", TILE_SIZE, TILE_SIZE))
-                .with(new CollidableComponent(true))
-                .zIndex((int) (finalPos.getY() * TILE_SIZE + visualOffsetY))
-                .buildAndAttach();
-
-        POSITION_MAP.put(finalPos, this);
-        TurnManager.ENEMY_LOGIC_MAP.put(enemyEntity, this);
-    }
-
-    public void takeTurn() {
+    public void takeTurn(Runnable onTurnComplete) {
         if (!logic.isAlive()) {
-            turnManager.endTurn();
+            onTurnComplete.run();
             return;
         }
 
         PlayerEntity target = findClosestAliveTarget();
         if (target == null) {
-            turnManager.endTurn();
+            onTurnComplete.run();
             return;
         }
 
         int distance = logic.getDistanceTo(target.getHero().getX(), target.getHero().getY());
 
         if (distance <= logic.attackRange) {
-            attackPlayer(target);
-        } else if (distance <= 10) {
-            moveTowardPlayer(target);
-        } else {
-            patrol();
-        }
+            int damage = random(logic.minDamage, logic.maxDamage);
+            target.getHero().takeDamage(damage);
+            showDamage(damage);
 
-        // Asegura terminar el turno tras ejecutar cualquier acción
-        FXGL.getGameTimer().runOnceAfter(turnManager::endTurn, Duration.seconds(0.2));
+            System.out.println("[ENEMY] " + logic.name + " ataca a " + target.getHero().name +
+                    " en (" + target.getHero().getX() + ", " + target.getHero().getY() + ")");
+
+            FXGL.getGameTimer().runOnceAfter(onTurnComplete, Duration.seconds(0.5));
+
+        } else if (distance <= 10) {
+            System.out.println("[ENEMY] " + logic.name + " se moverá hacia " +
+                    target.getHero().name + " en (" + target.getHero().getX() + ", " + target.getHero().getY() + ")");
+
+            moveTowardPlayer(target, onTurnComplete);
+
+        } else {
+            System.out.println("[ENEMY] " + logic.name + " está patrullando.");
+            patrol(onTurnComplete);
+        }
     }
+
+
 
     private PlayerEntity findClosestAliveTarget() {
         return targets.stream()
@@ -88,15 +90,8 @@ public class EnemyEntity {
                 .orElse(null);
     }
 
-    private void attackPlayer(PlayerEntity target) {
-        int damage = random(logic.minDamage, logic.maxDamage);
-        target.getHero().takeDamage(damage);
-        showDamage(damage);
-    }
-
-    private void moveTowardPlayer(PlayerEntity target) {
+    private void moveTowardPlayer(PlayerEntity target, Runnable onTurnComplete) {
         Point2D currentPos = new Point2D(logic.getX(), logic.getY());
-        Point2D targetPos = new Point2D(target.getHero().getX(), target.getHero().getY());
 
         List<Point2D> possibleMoves = Arrays.asList(
                 new Point2D(currentPos.getX() + 1, currentPos.getY()),
@@ -106,37 +101,120 @@ public class EnemyEntity {
         );
 
         for (Point2D move : possibleMoves) {
-            if (!POSITION_MAP.containsKey(move) && !isBlocked((int) move.getX(), (int) move.getY())) {
-                executeMove(currentPos, move);
+            int tileX = (int) move.getX();
+            int tileY = (int) move.getY();
+            boolean bloqueado = isBlocked(tileX, tileY);
+            System.out.println("[ENEMY] ¿Casilla bloqueada? " + bloqueado);
+
+            boolean libre = !POSITION_MAP.containsKey(move) &&
+                    !isBlocked(tileX, tileY) &&  // 🔹 BLOQUEAMOS MOVIMIENTO SI HAY OBSTÁCULO
+                    !turnManager.isTileOccupied(tileX, tileY);
+            if (isBlocked(tileX, tileY)) {
+                System.out.println("[ENEMY] Movimiento bloqueado: No puede avanzar a [" + tileX + ", " + tileY + "]");
+                FXGL.getGameTimer().runOnceAfter(onTurnComplete, Duration.seconds(0.1));
+                return; // 🔹 Detiene el movimiento si hay un obstáculo
+            }
+            if (bloqueado) {
+                System.out.println("[ENEMY] Movimiento bloqueado: No puede avanzar a [" + tileX + ", " + tileY + "]");
+                FXGL.getGameTimer().runOnceAfter(onTurnComplete, Duration.seconds(0.1));
+                return; // 🔹 Detiene el movimiento si hay un obstáculo, enemigo o héroe
+            }
+            if (libre) {
+                executeMoveSlowly(currentPos, move, onTurnComplete);
                 return;
             }
         }
+
+        // Si no puede moverse, enemigo espera su turno
+        System.out.println("[ENEMY] Movimiento bloqueado por obstáculo en [" + logic.getX() + ", " + logic.getY() + "]");
+        FXGL.getGameTimer().runOnceAfter(onTurnComplete, Duration.seconds(0.1));
     }
 
-    private void patrol() {
+    private void patrol(Runnable onTurnComplete) {
         int randomX = logic.getX() + (random.nextBoolean() ? 1 : -1);
         int randomY = logic.getY() + (random.nextBoolean() ? 1 : -1);
         Point2D currentPos = new Point2D(logic.getX(), logic.getY());
         Point2D newPos = new Point2D(randomX, randomY);
-
         if (!POSITION_MAP.containsKey(newPos) && !isBlocked(randomX, randomY)) {
-            executeMove(currentPos, newPos);
+            executeMoveSlowly(currentPos, newPos, onTurnComplete);
+        } else {
+            System.out.println("[ENEMY] Movimiento bloqueado por obstáculo en [" + randomX + ", " + randomY + "]");
+            FXGL.getGameTimer().runOnceAfter(onTurnComplete, Duration.seconds(0.1));
         }
+
     }
 
-    private void executeMove(Point2D oldPos, Point2D newPos) {
+    private void executeMoveSlowly(Point2D oldPos, Point2D newPos, Runnable onTurnComplete) {
         POSITION_MAP.remove(oldPos);
         logic.setPosition((int) newPos.getX(), (int) newPos.getY());
-        enemyEntity.setPosition(newPos.getX() * TILE_SIZE + visualOffsetX, newPos.getY() * TILE_SIZE + visualOffsetY);
-        POSITION_MAP.put(newPos, this);
+
+        Point2D targetPosition = new Point2D(
+                newPos.getX() * TILE_SIZE + visualOffsetX,
+                newPos.getY() * TILE_SIZE + visualOffsetY
+        );
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(enemyEntity.xProperty(), enemyEntity.getX()),
+                        new KeyValue(enemyEntity.yProperty(), enemyEntity.getY())
+                ),
+                new KeyFrame(Duration.seconds(0.4),
+                        new KeyValue(enemyEntity.xProperty(), targetPosition.getX(), Interpolator.EASE_OUT),
+                        new KeyValue(enemyEntity.yProperty(), targetPosition.getY(), Interpolator.EASE_OUT)
+                )
+        );
+        timeline.setOnFinished(e -> {
+            POSITION_MAP.put(newPos, this);
+            onTurnComplete.run();
+        });
+        timeline.play();
     }
 
-    private boolean isBlocked(int x, int y) {
-        return FXGL.getGameWorld()
+    private boolean isBlocked(int tileX, int tileY) {
+        System.out.println("Obstáculos detectados: " + FXGL.getGameWorld().getEntitiesByType(EntityType.OBSTACULOS).size());
+
+        // Verificar obstáculos
+        boolean blockedByObstacle = FXGL.getGameWorld()
                 .getEntitiesByType(EntityType.OBSTACULOS)
                 .stream()
-                .anyMatch(e -> e.getX() == x * TILE_SIZE && e.getY() == y * TILE_SIZE);
+                .anyMatch(e -> {
+                    int ex = (int) (Math.round(e.getX() / 56));
+                    int ey = (int) (Math.round(e.getY() / 56));
+                    boolean colision = ex == tileX && ey == tileY;
+                    System.out.println("Obstáculo en [" + ex + ", " + ey + "] → Bloqueo solicitado [" + tileX + ", " + tileY + "] → " + colision);
+                    return colision;
+                });
+
+        // Verificar enemigos
+        boolean blockedByEnemy = FXGL.getGameWorld()
+                .getEntitiesByType(EntityType.ENEMY)
+                .stream()
+                .anyMatch(e -> {
+                    int ex = (int) (Math.round(e.getX() / 56));
+                    int ey = (int) (Math.round(e.getY() / 56));
+                    boolean colision = ex == tileX && ey == tileY;
+                    System.out.println("Enemigo en [" + ex + ", " + ey + "] → Bloqueo solicitado [" + tileX + ", " + tileY + "] → " + colision);
+                    return colision;
+                });
+
+        // Verificar héroes
+        boolean blockedByHero = FXGL.getGameWorld()
+                .getEntitiesByType(EntityType.PLAYER)
+                .stream()
+                .anyMatch(e -> {
+                    int ex = (int) (Math.round(e.getX() / 56));
+                    int ey = (int) (Math.round(e.getY() / 56));
+                    boolean colision = ex == tileX && ey == tileY;
+                    System.out.println("Héroe en [" + ex + ", " + ey + "] → Bloqueo solicitado [" + tileX + ", " + tileY + "] → " + colision);
+                    return colision;
+                });
+
+        // Bloquear si hay un obstáculo, enemigo o héroe en la casilla
+        return blockedByObstacle || blockedByEnemy || blockedByHero;
     }
+
+
+
 
     public void showDamage(int amount) {
         Text damageText = new Text("-" + amount);
@@ -163,8 +241,11 @@ public class EnemyEntity {
                 .buildAndPlay();
     }
 
-    public DroneCombate getLogic() {
+    public Enemy getLogic() {
         return logic;
+    }
+    public void setEntity(Entity entity) {
+        this.enemyEntity = entity;
     }
 
     public Entity getEntity() {
@@ -198,4 +279,19 @@ public class EnemyEntity {
 
         return desiredPos;
     }
+    public boolean isTileOccupied(int tileX, int tileY) {
+        return FXGL.getGameWorld().getEntitiesByType(EntityType.ENEMY).stream()
+                .anyMatch(e -> {
+                    int ex = (int)(e.getX() / 56);
+                    int ey = (int)(e.getY() / 56);
+                    return ex == tileX && ey == tileY && e != this.getEntity();
+                }) ||
+                FXGL.getGameWorld().getEntitiesByType(EntityType.PLAYER).stream()
+                        .anyMatch(e -> {
+                            int px = (int)(e.getX() / 56);
+                            int py = (int)(e.getY() / 56);
+                            return px == tileX && py == tileY;
+                        });
+    }
+
 }
