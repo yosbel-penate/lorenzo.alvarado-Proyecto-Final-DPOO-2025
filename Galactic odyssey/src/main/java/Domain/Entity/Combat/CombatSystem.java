@@ -1,13 +1,13 @@
 package Domain.Entity.Combat;
 
-import Domain.Entity.Characters.Enemies.DroneCombate;
-import Domain.Entity.Characters.Players.CapOrion;
+import Domain.Entity.Characters.Enemies.Enemy;
+import Domain.Entity.Characters.Players.Hero;
 
 public class CombatSystem {
-    private CapOrion player;
-    private DroneCombate enemy;
+    private Hero player;
+    private Enemy enemy;
 
-    public CombatSystem(CapOrion player, DroneCombate enemy) {
+    public CombatSystem(Hero player, Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
         player.setPosition(0, 0);
@@ -17,28 +17,34 @@ public class CombatSystem {
     public void simulateTurn() {
         if (!player.isAlive() || !enemy.isAlive()) return;
 
+        // Turno del jugador
         int distance = player.getDistanceTo(enemy.getX(), enemy.getY());
-        if (distance <= player.attackRange) {
+        if (distance <= player.getAttackRange()) {
             int damage = random(player.minDamage, player.maxDamage);
-            enemy.health -= damage;
-            System.out.println(player.name + " ataca al enemigo y causa " + damage + " de daño. Vida del enemigo: " + enemy.health);
+            enemy.takeDamage(damage);
+            System.out.println(player.getName() + " ataca al enemigo y causa " + damage + " de daño. Vida del enemigo: " + enemy.getHealth());
         } else {
-            System.out.println(player.name + " se mueve hacia el enemigo.");
-            for (int i = 0; i < player.moveRange; i++) player.moveToward(enemy.getX(), enemy.getY());
+            System.out.println(player.getName() + " se mueve hacia el enemigo.");
+            for (int i = 0; i < player.getMoveRange(); i++) {
+                player.moveToward(enemy.getX(), enemy.getY());
+            }
         }
 
         if (!enemy.isAlive()) return;
 
+        // Turno del enemigo
         distance = enemy.getDistanceTo(player.getX(), player.getY());
-        if (distance <= enemy.attackRange) {
+        if (distance <= enemy.getAttackRange()) {
             int damage = random(enemy.minDamage, enemy.maxDamage);
-            player.health -= damage;
-            System.out.println(enemy.name + " ataca al jugador y causa " + damage + " de daño. Vida del jugador: " + player.health);
+            player.takeDamage(damage);
+            System.out.println(enemy.getName() + " ataca al jugador y causa " + damage + " de daño. Vida del jugador: " + player.health);
         } else if (distance <= 10) {
-            System.out.println(enemy.name + " se mueve hacia el jugador.");
-            for (int i = 0; i < enemy.moveRange; i++) enemy.moveToward(player.getX(), player.getY());
+            System.out.println(enemy.getName() + " se mueve hacia el jugador.");
+            for (int i = 0; i < enemy.moveRange; i++) {
+                enemy.moveToward(player.getX(), player.getY());
+            }
         } else {
-            System.out.println(enemy.name + " espera (fuera de rango)." );
+            System.out.println(enemy.getName() + " espera (fuera de rango).");
         }
     }
 

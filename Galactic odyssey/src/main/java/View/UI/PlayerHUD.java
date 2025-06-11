@@ -2,19 +2,31 @@ package View.UI;
 
 import Domain.Entity.Characters.Players.PlayerEntity;
 import Domain.Entity.Characters.Players.Hero;
-import com.almasb.fxgl.dsl.FXGL;
+import Domain.Entity.Elements.ObjetosMagicos.GlobalInventory;
+import Domain.Entity.Elements.ObjetosMagicos.Item;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
+import java.util.List;
+
 public class PlayerHUD {
+
     public PlayerEntity playerEntity;
+
+    private VBox hudContainer;
+
     private Text lifeValueText;
-    private Text specialAbilityStatusText;
-    private Text specialAbilityCooldownText;
     private StackPane lifeBar;
     private StackPane lifeBarContainer;
+
     private VBox specialAbilityContainer;
-    private VBox hudContainer;
+    private Text specialAbilityStatusText;
+    private Text specialAbilityCooldownText;
+
+    private VBox inventoryContainer;
+    private HBox inventoryImagesRow;
 
     public PlayerHUD(PlayerEntity playerEntity, int index) {
         this.playerEntity = playerEntity;
@@ -25,9 +37,8 @@ public class PlayerHUD {
         hudContainer = new VBox(10);
         hudContainer.setId("hud-container");
 
-        // Posición dinámica para cada jugador (vertical stacking)
         hudContainer.setTranslateX(20);
-        hudContainer.setTranslateY(20 + index * 100);
+        hudContainer.setTranslateY(20 + index * 120);
 
         lifeBarContainer = new StackPane();
         lifeBarContainer.getStyleClass().add("life-bar-container");
@@ -63,8 +74,21 @@ public class PlayerHUD {
 
         specialAbilityContainer.getChildren().addAll(specialAbilityStatusText, specialAbilityCooldownText);
 
-        hudContainer.getChildren().addAll(lifeBarContainer, specialAbilityContainer);
-        FXGL.getGameScene().addUINode(hudContainer);
+        inventoryContainer = new VBox(5);
+        inventoryContainer.getStyleClass().add("inventory-container");
+
+        Text inventoryTitle = new Text("INVENTARIO");
+        inventoryTitle.setId("inventory-title");
+
+        inventoryImagesRow = new HBox(5);
+        inventoryImagesRow.setId("inventory-images-row");
+
+        inventoryContainer.getChildren().addAll(inventoryTitle, inventoryImagesRow);
+
+        hudContainer.getChildren().addAll(lifeBarContainer, specialAbilityContainer, inventoryContainer);
+
+
+        updateHUD();
     }
 
     public void updateHUD() {
@@ -74,8 +98,10 @@ public class PlayerHUD {
         }
 
         Hero hero = playerEntity.getHero();
+
         updateHealthBar(hero);
         updateSpecialAbility(hero);
+        updateInventoryImages();
     }
 
     private void updateHealthBar(Hero hero) {
@@ -97,17 +123,49 @@ public class PlayerHUD {
         specialAbilityCooldownText.setText("RECARGA: " + cooldown + " TURNOS");
     }
 
+
+
     private void setDeadState() {
         lifeBar.setPrefWidth(0);
         lifeValueText.setText("0/0");
         specialAbilityStatusText.setText("HABILIDAD: INACTIVA");
         specialAbilityCooldownText.setText("JUGADOR DERROTADO");
+        inventoryContainer.setVisible(false);
     }
 
     private int getMaxHealth(Hero hero) {
-        return 20; // Puedes cambiar esto si tienes hero.maxHealth
+        return 20; // Ajusta si tienes maxHealth en Hero
     }
+
     public void setVisible(boolean visible) {
         hudContainer.setVisible(visible);
     }
+    public void updateInventoryImages() {
+        inventoryImagesRow.getChildren().clear();
+
+        List<Item> items = GlobalInventory.getItems();
+
+        if (items.isEmpty()) {
+            inventoryContainer.setVisible(false);
+            return;
+        }
+
+        inventoryContainer.setVisible(true);
+
+        for (Item item : items) {
+            ImageView icon = new ImageView(item.getImage());
+            icon.setFitWidth(32); // Usamos solo una configuración coherente
+            icon.setFitHeight(32);
+            icon.getStyleClass().add("inventory-icon");
+            inventoryImagesRow.getChildren().add(icon);
+        }
+    }
+
+    public Node getRoot() {
+        return hudContainer;
+    }
+
+
+
+
 }
