@@ -27,6 +27,7 @@ public class StarPuzzle {
     private final int[] flashCounts;
     private final List<Circle> stars = new ArrayList<>();
     private final List<SequentialTransition> animations = new ArrayList<>();
+    private StackPane root;
 
     public StarPuzzle(Runnable onSuccess) {
         this.onSuccess = onSuccess;
@@ -35,7 +36,7 @@ public class StarPuzzle {
 
     public void show() {
         // Configuración del fondo
-        StackPane root = new StackPane();
+        root = new StackPane();
         root.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
 
         // Panel del puzzle
@@ -94,13 +95,15 @@ public class StarPuzzle {
         codeInput.setStyle("-fx-font-size: 16px; -fx-pref-width: 250px; -fx-pref-height: 40px;");
         codeInput.setMaxWidth(250);
 
-        // Botón de enviar
+        // Botón de enviar con la nueva lógica para cerrar el puzzle
         Button submitButton = createStyledButton("Validar Código", () -> {
             try {
                 int userCode = Integer.parseInt(codeInput.getText());
                 int correctCode = calculateCorrectCode();
                 if (userCode == correctCode) {
                     stopAnimations();
+                    FXGL.getNotificationService().pushNotification("Puede pasar al siguiente nivel"); // Mensaje al usuario
+                    FXGL.getGameScene().removeUINode(root); // Cierra el puzzle
                     onSuccess.run();
                 } else {
                     FXGL.getNotificationService().pushNotification("Código incorrecto. Intenta de nuevo.");
