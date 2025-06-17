@@ -50,10 +50,14 @@ Anisleidy Guerra Díaz: Diseño de tablero y movimiento
 
 Alejandro López Almeida: Acertijos y eventos especiales
 
-## Requisitos del Sistema
+## Requisitos del Sistema y Guia de instalcion 
 Lenguaje: Java 11 o superior.
 Sistema operativo: Windows, Linux o macOS.
 RAM: 2 GB mínimo.Procesador: Intel i3 o superior.
+1-Clonar el repositorio del Github
+2-Abrirlo en un IDE  
+3-ir a la carpeta out/artifacts/ y abrir el .jar
+En caso de errores asegurarse de que el maven este actualizado y recargar las dependencias
 ## Clases principales:
 MainGame: Controla la lógica principal del juego.
 GameBoard: Representa el tablero de juego en 2D.
@@ -61,3 +65,4 @@ Player: Define a los personajes jugables y sus atributos.
 Enemy: Define los enemigos y sus comportamientos.
 Puzzle: Maneja los acertijos y su resolución.
 ### *Esto puede tener cambios a medida que avanza el proyecto. También habrá apoyo de todos los miembros en alguna tarea específica con el objetivo de agilizar los problemas.
+
