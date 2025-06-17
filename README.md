@@ -1,16 +1,10 @@
 # Documento de Visión Inicial y de Requerimientos del Proyecto Final de la asignatura Diseño y Programación Orientada a Objetos.
 ## Equipo numero 2 conformado por los siguientes integrantes.
 Lorenzo Pérez Alvarado©
-
 Anisleidy Guerra Diaz
-
 Johan Moran Sarmiento
-
 Jonathan Horta Padrón
-
 Alejandro López Almeida
-
-
 ## Título del juego que desarrollaremos: “Galactic Odyssey: The Cosmic Enigma”
 ## Temática/género del juego:
 Aventura, exploración espacial, acción y estrategia.
@@ -31,29 +25,37 @@ Plataforma de lanzamiento: PC (Windows).
 Estilo Visual y Sonoro:
 ## Gráficos: Pixel art con efectos de iluminación y animaciones fluidas.
 Música y sonido: Banda sonora de ambientación espacial con efectos de sonido para disparos, motores y diálogos.
-
 El juego presenta diversas funcionalidades que serían:
 Funciones del mapa:
 Funciones del combate
 Funciones de los modos de juego
 Funciones del menú
-
 Nuestro proyecto está actualmente en fase de planificación, con desarrollo inicial del motor de juego y mecánicas principales.
 ## Division del proyecto por miembros:
 Johan Moran Sarmiento: Gestión de personajes y enemigos 
-
 Lorenzo Pérez Alvarado: Interfaz de usuario y efectos visuales
-
 Jonathan Horta Padron: Implementar el sistema de combate por turnos
-
 Anisleidy Guerra Díaz: Diseño de tablero y movimiento 
 
 Alejandro López Almeida: Acertijos y eventos especiales
 
 ## Requisitos del Sistema
+## Requisitos del Sistema y Guia de instalcion 
 Lenguaje: Java 11 o superior.
 Sistema operativo: Windows, Linux o macOS.
 RAM: 2 GB mínimo.Procesador: Intel i3 o superior.
+
+COMPILAR PROYECTO:
+
+1-Clonar el repositorio del Github
+2-Abrirlo en un IDE  
+3-Load maven (es decir recargar las dependencias de maven)
+4-Compilar el proyecto después de haber descargado  las dependencias
+
+Para probar los acertijos de cada nivel debe tocar las letras :
+P-level1
+L-level2
+
 ## Clases principales:
 MainGame: Controla la lógica principal del juego.
 GameBoard: Representa el tablero de juego en 2D.
