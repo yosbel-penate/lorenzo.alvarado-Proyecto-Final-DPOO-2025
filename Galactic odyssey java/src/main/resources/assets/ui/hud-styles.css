@@ -1,0 +1,67 @@
+/* Estilo del contenedor de la barra de vida */
+.life-bar-container {
+    -fx-background-color: #333333;
+    -fx-border-color: #666666;
+    -fx-border-width: 2;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+/* Estilo de la barra de vida */
+.life-bar {
+    -fx-background-color: linear-gradient(to right, #00d9ff, #006eff);
+    -fx-background-radius: 8;
+}
+
+/* Efecto galáctico opcional (puede ser solo decorativo o semitransparente) */
+.life-bar-galaxy-effect {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: transparent;
+    -fx-background-radius: 8;
+}
+
+/* Texto general de HUD */
+#life, #specialAbility, #cooldown {
+    -fx-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-family: "Consolas";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, black, 2, 0, 1, 1);
+}
+
+/* Contenedor de habilidad especial */
+.special-ability-container {
+    -fx-background-color: rgba(10, 14, 63, 0.6);
+    -fx-padding: 5;
+    -fx-background-radius: 8;
+    /* --- INVENTARIO --- */
+}
+    #inventory-title {
+        -fx-font-size: 14px;
+        -fx-fill: #FFD700;
+        -fx-font-weight: bold;
+        -fx-effect: dropshadow(gaussian, black, 2, 0, 1, 1);
+    }
+
+    #inventory-item {
+        -fx-font-size: 12px;
+        -fx-fill: white;
+        -fx-font-family: "Consolas";
+        -fx-effect: dropshadow(gaussian, black, 1, 0, 1, 1);
+    }
+
+    /* Contenedor del inventario */
+    .inventory-container {
+        -fx-background-color: rgba(20, 20, 40, 0.7);
+        -fx-background-radius: 8;
+        -fx-padding: 10;
+        -fx-spacing: 5;
+    }
+
+    /* Estilo para imágenes de ítems */
+    .inventory-icon {
+        -fx-effect: dropshadow(gaussian, #000000, 4, 0, 1, 1);
+        -fx-padding: 3;
+    }
+
+}
